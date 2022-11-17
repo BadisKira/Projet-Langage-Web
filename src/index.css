@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+
+  --primary-color: rgb(56, 3, 233);
+  --secondary-color: #00affb;
+  --thirdly-color: #0e0054;
+
+  --navbar-height: 80px;
+
+  background-color: #fff;
+
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+li {
+  list-style: none;
+}

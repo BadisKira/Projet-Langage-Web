@@ -1,0 +1,88 @@
+      <Stack
+        alignItems="center"
+        sx={{
+          background: "red",
+          padding: "30px",
+        }}
+      >
+        {/**LOGO ET TITRE  **/}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "50px",
+          }}
+        >
+          <BalanceIcon sx={{ fontSize: "4em", marginRight: "10px" }} />
+          <Typography variant="h2" fontWeight={"bolder"} component="h2">
+            Frello
+          </Typography>
+        </Box>
+        {/* LE FORMUALIRE  */}
+        <Box sx={{ background: "grey" }}>
+          <form action="" method="post">
+            <Stack direction={{ xs: "column" }} spacing={{ xs: 1, sm: 2 }}>
+              {isSigninUp && (
+                <>
+                  <TextField type={"text"} placeholder="Nom" />
+                  <TextField type={"text"} placeholder="Prénom" />
+                </>
+              )}
+
+              <TextField type={"text"} placeholder="Pseudo" />
+
+              <TextField
+                placeholder="password"
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      sx={{ cursor: "pointer" }}
+                      position="end"
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <Button fullWidth={false} variant="contained" size="large">
+                SEND NUDE
+              </Button>
+
+              <Box>
+                {isSigninUp ? (
+                  <>
+                    Do you have an account ?
+                    <Button
+                      variant="text"
+                      size="small"
+                      onClick={() => {
+                        setIsSigninUp(false);
+                      }}
+                    >
+                      Connectez-vous
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    Vous voulez crrer un compte ?
+                    <Button
+                      variant="text"
+                      size="small"
+                      onClick={() => {
+                        setIsSigninUp(true);
+                      }}
+                    >
+                      Inscrivez-vous
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </Stack>
+          </form>
+        </Box>
+      </Stack>
