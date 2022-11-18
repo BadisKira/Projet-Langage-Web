@@ -10,9 +10,9 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BalanceIcon from "@mui/icons-material/Balance";
+import MyInput from "../../components/Input";
 import Image1 from "../../assets/images/Management.png";
 import Image2 from "../../assets/images/Scrum.png";
-import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -35,8 +35,35 @@ const LoginPage = () => {
     else console.log(form);
   };
   return (
-    <Grid container sx={{ minHeight: "100vh" }}>
-      <Grid item xs={12} md={6}>
+    <Grid
+      container
+      sx={{
+        minHeight: "100vh",
+        width: "100%",
+      }}
+    >
+      <Grid item xs={0} lg={4} md={3}>
+        <Box
+          sx={{
+            height: "100%",
+            display: { xs: "none", md: "flex" },
+            flexDirection: "column",
+            justifyContent: "end",
+            alignItems: "center",
+          }}
+        >
+          <img
+            style={{
+              width: "80%",
+              height: "auto",
+            }}
+            src={Image1}
+            alt="Kanban illustation"
+          />
+        </Box>
+      </Grid>
+
+      <Grid item xs={12} lg={4} md={6} pt={5}>
         <Stack
           alignItems="center"
           sx={{
@@ -52,24 +79,20 @@ const LoginPage = () => {
               marginBottom: "50px",
             }}
           >
-            <Link to="/">
-              <BalanceIcon sx={{ fontSize: "4em", marginRight: "10px" }} />
-            </Link>
+            <BalanceIcon sx={{ fontSize: "4em", marginRight: "10px" }} />
             <Typography variant="h2" fontWeight={"bolder"} component="h2">
-              <Link to="/">Frello </Link>
+              Frello
             </Typography>
           </Box>
-
           {/* LE FORMUALIRE  */}
           <Container
-            maxWidth={"xs"}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               background: "white",
               minHeight: "500px",
-
+              maxWidth: "450px",
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;",
             }}
@@ -171,26 +194,29 @@ const LoginPage = () => {
           </Container>
         </Stack>
       </Grid>
-      <Grid
-        item
-        md={6}
-        display={{ xs: "none", md: "flex" }}
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-          background: "rgba(0,0,0,0.1)",
-        }}
-      >
-        <img
-          style={{
-            width: "90%",
-            height: "auto",
+
+      <Grid item xs={0} lg={4} md={3}>
+        <Box
+          sx={{
+            height: "100%",
+            display: { xs: "none", md: "flex" },
+            flexDirection: "column",
+            justifyContent: "end",
+            alignItems: "center",
           }}
-          src={Image1}
-          alt="Kanban illustation"
-        />
+        >
+          <img
+            style={{
+              width: "80%",
+              height: "auto",
+            }}
+            src={Image2}
+            alt="Kanban illustation"
+          />
+        </Box>
       </Grid>
     </Grid>
   );
 };
+
 export default LoginPage;

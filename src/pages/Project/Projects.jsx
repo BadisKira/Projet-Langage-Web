@@ -1,7 +1,8 @@
 import React from "react";
+import Box from "@mui/material/Box";
 
 const Projects = () => {
-  return <div>Projects Initialisation</div>;
+  return <Box></Box>;
 };
 
 export default Projects;
