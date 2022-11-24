@@ -11,29 +11,45 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BalanceIcon from "@mui/icons-material/Balance";
 import Image1 from "../../assets/images/Management.png";
-import Image2 from "../../assets/images/Scrum.png";
 import { Link } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+import { setCredentials } from "../../features/auth/authSlice";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [isSigninUp, setIsSigninUp] = React.useState(false);
+  const [isSignUp, setIsSignUp] = React.useState(false); //signup == inscrire && signin == authentifier
   const [form, setForm] = React.useState({
     firstName: "",
     lastName: "",
-    pseudo: "",
+    username: "",
     password: "",
   });
+
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     console.log(e.target.name, e.target.value);
   };
 
-  const handelClick = () => {
-    if (!isSigninUp)
-      console.log({ pseudo: form.pseudo, password: form.password });
-    else console.log(form);
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+
+    if (isSignUp) {
+      // S'inscrire
+    } else {
+      try {
+        const userData = await login({
+          username: form.username,
+          password: form.password,
+        }).unwrap();
+      } catch (error) {}
+    }
   };
+
   return (
     <Grid container sx={{ minHeight: "100vh" }}>
       <Grid item xs={12} md={6}>
@@ -74,9 +90,9 @@ const LoginPage = () => {
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;",
             }}
           >
-            <form action="" method="post">
+            <form action="" method="post" onSubmit={handelSubmit}>
               <Stack direction={{ xs: "column" }} spacing={{ xs: 1, sm: 2 }}>
-                {isSigninUp && (
+                {isSignUp && (
                   <>
                     <TextField
                       onChange={handleChange}
@@ -102,8 +118,8 @@ const LoginPage = () => {
                   required
                   size="medium"
                   type={"text"}
-                  placeholder="Pseudo"
-                  name="pseudo"
+                  placeholder="username"
+                  name="username"
                 />
 
                 <TextField
@@ -132,20 +148,20 @@ const LoginPage = () => {
                   variant="contained"
                   size="large"
                   sx={{ textTransform: "capitalize" }}
-                  onClick={handelClick}
+                  type="submit"
                 >
                   Send
                 </Button>
 
                 <Box>
-                  {isSigninUp ? (
+                  {isSignUp ? (
                     <>
                       Do you have an account ?
                       <Button
                         variant="text"
                         size="small"
                         onClick={() => {
-                          setIsSigninUp(false);
+                          setIsSignUp(false);
                         }}
                       >
                         Sign-up
@@ -158,7 +174,7 @@ const LoginPage = () => {
                         variant="text"
                         size="small"
                         onClick={() => {
-                          setIsSigninUp(true);
+                          setIsSignUp(true);
                         }}
                       >
                         Sign-in

@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SchemaIcon from "@mui/icons-material/Schema";
 import { Link } from "react-router-dom";
-const pages = ["Projects", "Projects"];
+const pages = [{ link: "/project", name: "Projects" }];
 const settings = ["Profile", "Logout"];
 
 function Navbar() {
@@ -90,8 +90,11 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.link} onClick={handleCloseNavMenu}>
+                  <Link to={page.link}>
+                    {" "}
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -124,13 +127,15 @@ function Navbar() {
             }}
           >
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
+              <Link to={page.link}>
+                <Button
+                  key={page.link}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
             ))}
           </Box>
           {isConnected ? (
@@ -166,7 +171,7 @@ function Navbar() {
             </Box>
           ) : (
             <Box>
-              <Link to="login">
+              <Link to="/login">
                 <Button
                   sx={{
                     background: "black",
