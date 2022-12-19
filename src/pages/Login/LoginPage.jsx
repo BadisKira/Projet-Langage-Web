@@ -12,27 +12,29 @@ import Typography from "@mui/material/Typography";
 import BalanceIcon from "@mui/icons-material/Balance";
 import Image1 from "../../assets/images/Management.png";
 import { Link } from "react-router-dom";
-
+import Loading from "../../components/Loading";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import { setCredentials } from "../../features/auth/authSlice";
+import { useSignupMutation } from "../../features/register/registerApiSlice";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [isSignUp, setIsSignUp] = React.useState(false); //signup == inscrire && signin == authentifier
   const [form, setForm] = React.useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     username: "",
     password: "",
   });
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, authRes] = useLoginMutation();
   const dispatch = useDispatch();
+
+  const [signup, signupRes] = useSignupMutation();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log(e.target.name, e.target.value);
   };
 
   const handelSubmit = async (e) => {
@@ -40,6 +42,13 @@ const LoginPage = () => {
 
     if (isSignUp) {
       // S'inscrire
+
+      const userData = await signup(form).unwrap();
+
+      try {
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       try {
         const userData = await login({
@@ -90,100 +99,109 @@ const LoginPage = () => {
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;",
             }}
           >
-            <form action="" method="post" onSubmit={handelSubmit}>
-              <Stack direction={{ xs: "column" }} spacing={{ xs: 1, sm: 2 }}>
-                {isSignUp && (
-                  <>
-                    <TextField
-                      onChange={handleChange}
-                      required
-                      size="medium"
-                      type={"text"}
-                      placeholder="First Name"
-                      name="firstName"
-                    />
-                    <TextField
-                      onChange={handleChange}
-                      required
-                      size="medium"
-                      type={"text"}
-                      placeholder="Last Name"
-                      name="lastName"
-                    />
-                  </>
-                )}
-
-                <TextField
-                  onChange={handleChange}
-                  required
-                  size="medium"
-                  type={"text"}
-                  placeholder="username"
-                  name="username"
-                />
-
-                <TextField
-                  onChange={handleChange}
-                  required
-                  size="medium"
-                  placeholder="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment
-                        sx={{ cursor: "pointer" }}
-                        position="end"
-                        onClick={() => {
-                          setShowPassword(!showPassword);
-                        }}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ textTransform: "capitalize" }}
-                  type="submit"
-                >
-                  Send
-                </Button>
-
-                <Box>
-                  {isSignUp ? (
+            {signupRes.isLoading || authRes.isLoading ? (
+              <Loading loading={signupRes.isLoading || authRes.isLoading} />
+            ) : (
+              <form action="" method="post" onSubmit={handelSubmit}>
+                <Stack direction={{ xs: "column" }} spacing={{ xs: 1, sm: 2 }}>
+                  {isSignUp && (
                     <>
-                      Do you have an account ?
-                      <Button
-                        variant="text"
-                        size="small"
-                        onClick={() => {
-                          setIsSignUp(false);
-                        }}
-                      >
-                        Sign-up
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      You want to create an account for free
-                      <Button
-                        variant="text"
-                        size="small"
-                        onClick={() => {
-                          setIsSignUp(true);
-                        }}
-                      >
-                        Sign-in
-                      </Button>
+                      <TextField
+                        onChange={handleChange}
+                        required
+                        size="medium"
+                        type={"text"}
+                        placeholder="First Name"
+                        name="firstname"
+                      />
+                      <TextField
+                        onChange={handleChange}
+                        required
+                        size="medium"
+                        type={"text"}
+                        placeholder="Last Name"
+                        name="lastname"
+                      />
                     </>
                   )}
-                </Box>
-              </Stack>
-            </form>
+
+                  <TextField
+                    onChange={handleChange}
+                    required
+                    size="medium"
+                    type={"text"}
+                    placeholder="username"
+                    name="username"
+                  />
+
+                  <TextField
+                    onChange={handleChange}
+                    required
+                    size="medium"
+                    placeholder="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment
+                          sx={{ cursor: "pointer" }}
+                          position="end"
+                          onClick={() => {
+                            setShowPassword(!showPassword);
+                          }}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+
+                  <Button
+                    variant="contained"
+                    size="large"
+                    sx={{ textTransform: "capitalize" }}
+                    type="submit"
+                  >
+                    Send
+                  </Button>
+
+                  <Typography variant="subtitle1" component={"p"}>
+                    {signupRes.isError && "erreur de registration"}
+                    {authRes.isError && "erreur d'authentification"}
+                  </Typography>
+
+                  <Box>
+                    {isSignUp ? (
+                      <>
+                        Do you have an account ?
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={() => {
+                            setIsSignUp(false);
+                          }}
+                        >
+                          Sign-up
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        You want to create an account for free
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={() => {
+                            setIsSignUp(true);
+                          }}
+                        >
+                          Sign-in
+                        </Button>
+                      </>
+                    )}
+                  </Box>
+                </Stack>
+              </form>
+            )}
           </Container>
         </Stack>
       </Grid>

@@ -2,12 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KanbanSideBar from "./KanbanSideBar";
 
-const KanbanHeader = ({
-  name = "The best project",
-  creator = "Badis Hammadache",
-}) => {
+const KanbanHeader = ({ nameK, idCreator, dateCreation, privacy, id }) => {
+  const [openSideBar, setOpenSideBar] = React.useState(false);
   return (
     <Box
       sx={{
@@ -19,21 +18,22 @@ const KanbanHeader = ({
         padding: "0px 10px",
       }}
     >
-      <Typography variant="h5" comp="h2" fontWeight={"bold"} mr={2}>
-        {name}
-      </Typography>
-      <Typography variant="subtitle1" comp="h4" mr={2}>
-        {creator}
-      </Typography>
-      <Typography variant="subtitle1" comp="h4" fontWeight={"bold"} mr={2}>
-        Created The : lun 17 Nov 2022
-      </Typography>
-      <Typography marginLeft={"auto"} marginRight={3}>
-        Prive ou public
-      </Typography>
-      <IconButton>
-        <MenuIcon />
+      <IconButton
+        onClick={() => {
+          setOpenSideBar(true);
+        }}
+      >
+        <KeyboardDoubleArrowRightIcon />
       </IconButton>
+      <KanbanSideBar
+        nameK={nameK}
+        idCreator={idCreator}
+        dateCreation={dateCreation}
+        id={id}
+        privacy={privacy}
+        openSideBar={openSideBar}
+        setOpenSideBar={setOpenSideBar}
+      />
     </Box>
   );
 };

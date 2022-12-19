@@ -1,15 +1,16 @@
 import { ApiSlice } from "../../app/api/apiSlice";
 
+
 export const RegisterApiSlice = ApiSlice.injectEndpoints({
-    endpoints: builder => {
+    endpoints: builder => ({
         signup: builder.mutation({
             query: credentials => ({
-                url: '/signup',
+                url: '/auth/signup',
                 method: "POST",
                 body: { ...credentials }
             })
         })
-    }
+    })
 });
 
-export const { useSignUpMutation } = RegisterApiSlice; 
+export const { useSignupMutation } = RegisterApiSlice; 

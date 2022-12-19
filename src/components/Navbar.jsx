@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SchemaIcon from "@mui/icons-material/Schema";
 import { Link } from "react-router-dom";
-const pages = [{ link: "/project", name: "Projects" }];
+const pages = [{ link: "/projects", name: "Projects" }];
 const settings = ["Profile", "Logout"];
 
 function Navbar() {
@@ -127,7 +127,7 @@ function Navbar() {
             }}
           >
             {pages.map((page) => (
-              <Link to={page.link}>
+              <Link to={page.link} key={page.link}>
                 <Button
                   key={page.link}
                   onClick={handleCloseNavMenu}

@@ -5,23 +5,36 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import { TransitionGroup } from "react-transition-group";
-
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import Task from "./Task.jsx";
 import ModelTask from "./ModelTask.jsx";
+import { useDeleteColMutation } from "../features/cols/ColApiSlice.js";
+import { Droppable } from "react-beautiful-dnd";
+import { useGetTasksQuery } from "../features/tasks/TaskSliceApi";
+import { addNewCol } from "../features/cols/ColSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+const Col = ({ nameCol, id, idKanban }) => {
+  const {
+    data: tasks,
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+  } = useGetTasksQuery(id);
 
-const Tasks = [];
-const Col = ({ name }) => {
-  const [tasks, setTasks] = React.useState(Tasks);
-  const [task, setTask] = React.useState({
-    name: "",
-    desc: "",
-    user: "",
-    dateLimit: new Date(),
-  });
+  const [openModalTask, setOpenModalTask] = React.useState(false);
+  const [deleteCol] = useDeleteColMutation();
+  const dispatch = useDispatch();
+  // React.useEffect(() => {
+  //   if (isSuccess) {
+  //     console.log("disptach add new col");
+  //     dispatch(addNewCol({ id: id, nameCol: nameCol, tasks }));
+  //   }
+  // }, [tasks]);
 
-  const [openModalTask, setOpenModalTask] = React.useState();
   return (
-    <React.Fragment>
+    <>
       <Box
         sx={{
           maxWidth: "400px",
@@ -34,6 +47,7 @@ const Col = ({ name }) => {
           maxHeight: "95%",
           overflowY: "auto",
           margin: "10px",
+          position: "relative",
           "&::-webkit-scrollbar": {
             width: "0.5rem",
           },
@@ -46,36 +60,58 @@ const Col = ({ name }) => {
       >
         <Stack>
           <Typography variant="h6" comp="h3" sx={{ marginBottom: "10px" }}>
-            {name}
+            {nameCol}
           </Typography>
           <Button
             onClick={() => {
               setOpenModalTask(true);
-              console.log(tasks);
             }}
           >
             Add a new Task +{" "}
           </Button>
-          <Stack>
-            <TransitionGroup>
-              {tasks.map((task) => (
-                <Collapse key={Task.id}>
-                  <Task name={task.name} desc={task.desc} />
-                </Collapse>
-              ))}
-            </TransitionGroup>
-          </Stack>
+          <Droppable droppableId={String(id)}>
+            {(provided) => (
+              <Stack ref={provided.innerRef} {...provided.droppableProps}>
+                <TransitionGroup>
+                  {isSuccess &&
+                    tasks.map((task, index) => (
+                      <Collapse key={task.nameT}>
+                        <Task {...task} id={task.id} index={index} />
+                      </Collapse>
+                    ))}
+                </TransitionGroup>
+                {provided.placeholder}
+              </Stack>
+            )}
+          </Droppable>
         </Stack>
+        <IconButton
+          onClick={async () => {
+            // verifier que la colonne n'est pas vide
+            if (isSuccess && tasks.length == 0) {
+              await deleteCol(id);
+            } else {
+              alert("Move all tasks");
+            }
+          }}
+          size="small"
+          sx={{
+            position: "absolute",
+            top: "0",
+            right: "0",
+            cursor: "pointer",
+          }}
+        >
+          <ClearIcon fontSize="1.1rem" />
+        </IconButton>
       </Box>
       <ModelTask
-        setTasks={setTasks}
-        task={task}
-        setTask={setTask}
-        tasks={tasks}
+        idCol={id}
+        nameCol={nameCol}
         setOpenModalTask={setOpenModalTask}
         openModalTask={openModalTask}
       />
-    </React.Fragment>
+    </>
   );
 };
 

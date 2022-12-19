@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Grid, Container, Stack, Typography, Button } from "@mui/material";
-import "./home.css";
 import ImageLog from "../../assets/images/imageLog.jpg";
 
 const Home = () => {

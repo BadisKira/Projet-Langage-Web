@@ -7,32 +7,44 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import { useCreateTaskMutation } from "../features/tasks/TaskSliceApi";
+
 import React from "react";
 import { Select, MenuItem } from "@mui/material";
 
-const ModelTask = ({
-  openModalTask,
-  setOpenModalTask,
-  task,
-  setTask,
-  setTasks,
-  tasks,
-}) => {
+const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
+  const [createTask] = useCreateTaskMutation();
+  const [task, setTask] = React.useState({
+    nameT: "",
+    descriptionT: "",
+    username: "",
+    dateLimit: new Date(),
+    nameCol: nameCol,
+    idCol: idCol,
+    importance: "",
+  });
   const handelChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
   const handelClose = () => {
     setOpenModalTask(false);
     setTask({
-      name: "",
-      desc: "",
-      user: "",
+      nameT: "",
+      descriptionT: "",
+      username: "",
       dateLimit: null,
+      nameCol: "",
+      idCol: null,
+      importance: "",
     });
   };
-  const handelAdd = () => {
-    setTasks([...tasks, { id: tasks.length + 1, ...task }]);
-    handelClose();
+  const handelAdd = async () => {
+    try {
+      await createTask(task);
+      handelClose();
+    } catch (error) {
+      alert(error);
+    }
   };
   return (
     <Dialog open={openModalTask}>
@@ -62,7 +74,7 @@ const ModelTask = ({
               size="small"
               type="text"
               label="task name"
-              name={"name"}
+              name={"nameT"}
               value={task.name}
             />
             <TextField
@@ -74,7 +86,7 @@ const ModelTask = ({
               maxRows={3}
               label="Description"
               value={task.desc}
-              name="desc"
+              name="descriptionT"
             />
           </Box>
 
@@ -84,7 +96,7 @@ const ModelTask = ({
               label="Task's user"
               size="small"
               value={task.user}
-              name="user"
+              name="username"
             >
               <MenuItem value={10}>Ten</MenuItem>
               <MenuItem value={20}>Twenty</MenuItem>

@@ -5,58 +5,72 @@ import { IconButton, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import PersonIcon from "@mui/icons-material/Person";
 
+import { Draggable } from "react-beautiful-dnd";
+
 const Task = ({
-  name,
-  desc = "",
-  dateLimit = "19/11/2023",
-  userName = "Badis Hammadache",
-  importance = "red",
+  id,
+  nameT,
+  index,
+  descriptionT,
+  nameCol,
+  idCol,
+  dateLimit,
+  username,
+  importance,
 }) => {
   return (
-    <Paper
-      elevation={5}
-      sx={{
-        display: "flex",
-        margin: "10px",
-        borderTopColor: { importance },
-        borderTop: "1px",
-      }}
-    >
-      <Box
-        sx={{ flex: 11, paddingLeft: "5px", "&:hover": { cursor: "pointer" } }}
-      >
-        <Typography variant="subtitle1" comp="p">
-          {name}
-        </Typography>
-        <Typography variant="caption" comp="p">
-          Date Limit : {dateLimit}
-        </Typography>{" "}
-        <br />
-        <Typography variant="caption" comp="p">
-          {userName}
-        </Typography>
-        <Typography variant="subtitle2" comp="p">
-          {desc}
-        </Typography>
-      </Box>
-
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "start",
-        }}
-      >
-        <IconButton
-          onClick={() => {
-            console.log("open modal");
+    <Draggable draggableId={String(id)} index={index}>
+      {(provided) => (
+        <Paper
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          elevation={7}
+          sx={{
+            display: "flex",
+            margin: "10px",
+            borderTopColor: { importance },
+            borderTop: "1px",
+            marginTop: "5px",
           }}
         >
-          <ModeEditIcon />
-        </IconButton>
-      </Box>
-    </Paper>
+          <Box
+            sx={{
+              flex: 11,
+              paddingLeft: "5px",
+              "&:hover": { cursor: "pointer" },
+            }}
+          >
+            <Typography variant="subtitle1" comp="p">
+              {nameT}
+            </Typography>
+            <Typography variant="caption" comp="p">
+              Date Limit : {dateLimit}
+            </Typography>{" "}
+            <br />
+            <Typography variant="caption" comp="p">
+              {username}
+            </Typography>
+            <Typography variant="subtitle2" comp="p">
+              {descriptionT}
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              alignItems: "start",
+              justifyContent: "start",
+            }}
+          >
+            <IconButton onClick={() => {}}>
+              <ModeEditIcon />
+            </IconButton>
+          </Box>
+        </Paper>
+      )}
+    </Draggable>
   );
 };
 

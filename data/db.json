@@ -1,0 +1,89 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Badis",
+      "lastname": "Aissa mandi",
+      "username": "Patis",
+      "password": "12345"
+    }
+  ],
+  "Tasks": [
+    {
+      "nameT": "badis",
+      "descriptionT": "fezf",
+      "username": 30,
+      "dateLimit": "2022-12-11",
+      "nameCol": "To do",
+      "idCol": 1,
+      "importance": "",
+      "id": 1
+    },
+    {
+      "nameT": "dze",
+      "descriptionT": "dezd",
+      "username": 20,
+      "dateLimit": "2022-12-14",
+      "nameCol": "done",
+      "idCol": 2,
+      "importance": "",
+      "id": 2
+    },
+    {
+      "nameT": "dezd",
+      "descriptionT": "fezf",
+      "username": 20,
+      "dateLimit": "2022-12-06",
+      "nameCol": "To do",
+      "idCol": 1,
+      "importance": "",
+      "id": 3
+    },
+    {
+      "nameT": "Badis",
+      "descriptionT": "beziufhezifgjzehfvjhvj",
+      "username": 20,
+      "dateLimit": "2022-12-28",
+      "nameCol": "fr",
+      "idCol": 3,
+      "importance": "",
+      "id": 4
+    }
+  ],
+  "Cols": [
+    {
+      "id": 1,
+      "nameCol": "To do",
+      "idKanban": 1
+    },
+    {
+      "id": 2,
+      "nameCol": "done",
+      "idKanban": 1
+    },
+    {
+      "nameCol": "fr",
+      "idKanban": 1,
+      "id": 3
+    }
+  ],
+  "Kanbans": [
+    {
+      "id": 1,
+      "nameK": "Kanban number 1 ",
+      "dateCreation": "27/11/2022",
+      "idCreator": 1,
+      "privacy": 1,
+      "description": "rr"
+    },
+    {
+      "id": 2,
+      "nameK": "Kanban number 2 ",
+      "dateCreation": "01/12/1455",
+      "idCreator": 1,
+      "privacy": 1,
+      "description": "rr"
+    }
+  ],
+  "KanbanUsers": []
+}

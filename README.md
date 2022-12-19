@@ -68,3 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+// on ajoute la table invitations :
+y'aura zyess iduser , idKanban  
+comme ca chaque user qui se connecte pourra voir ses invitations et accepte celle qu'il veut (verifier aussi a chaque auth si les projets des invitations sont toujours dispo sinon supprime l'invitation direct mon reuf )
