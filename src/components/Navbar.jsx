@@ -13,6 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SchemaIcon from "@mui/icons-material/Schema";
+import LogoImg from "../assets/images/logo.png";
+
 import { Link } from "react-router-dom";
 const pages = [{ link: "/projects", name: "Projects" }];
 const settings = ["Profile", "Logout"];
@@ -41,7 +43,6 @@ function Navbar() {
     <AppBar position="static" elevation={5}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <SchemaIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -53,7 +54,6 @@ function Navbar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
               textDecoration: "none",
             }}
           >
@@ -99,7 +99,7 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-          <SchemaIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+
           <Typography
             variant="h5"
             noWrap
@@ -116,8 +116,9 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            TRELLO
+            <Link to="/">FRELLO</Link>
           </Typography>
+
           <Box
             sx={{
               flexGrow: 1,
