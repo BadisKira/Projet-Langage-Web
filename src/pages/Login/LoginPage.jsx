@@ -77,9 +77,6 @@ const LoginPage = () => {
               marginBottom: "50px",
             }}
           >
-            <Link to="/">
-              <BalanceIcon sx={{ fontSize: "4em", marginRight: "10px" }} />
-            </Link>
             <Typography variant="h2" fontWeight={"bolder"} component="h2">
               <Link to="/">Frello </Link>
             </Typography>
