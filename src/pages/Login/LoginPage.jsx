@@ -9,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import BalanceIcon from "@mui/icons-material/Balance";
 import Image1 from "../../assets/images/Management.png";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
@@ -17,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useSignupMutation } from "../../features/register/registerApiSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -27,6 +27,8 @@ const LoginPage = () => {
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const [login, authRes] = useLoginMutation();
   const dispatch = useDispatch();
@@ -42,9 +44,8 @@ const LoginPage = () => {
 
     if (isSignUp) {
       // S'inscrire
-
-      const userData = await signup(form).unwrap();
-
+      await signup(form).unwrap();
+      alert("compte utilisateur créer");
       try {
       } catch (error) {
         console.log(error);
@@ -55,6 +56,19 @@ const LoginPage = () => {
           username: form.username,
           password: form.password,
         }).unwrap();
+
+        dispatch(
+          setCredentials({
+            user: {
+              id: userData.id,
+              username: userData.username,
+              firstname: userData?.firstName || "Aouaouche",
+              lastname: userData?.lastName || "Lamriou",
+            },
+            accessToken: userData.authToken,
+          })
+        );
+        navigate(-1);
       } catch (error) {}
     }
   };

@@ -9,6 +9,7 @@ const baseQuery = fetchBaseQuery({
     credentials: "include", // send back  http only secure cookie in every query
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
+        console.log("get state ==> ", token);
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }

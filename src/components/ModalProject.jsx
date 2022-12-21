@@ -8,6 +8,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import ClearIcon from "@mui/icons-material/Clear";
 
+import { useAddKanbanMutation } from "../features/kanban/KanbanApiSlice";
+
 const LittelPaper = ({ label, deleteCol }) => {
   return (
     <Paper
@@ -39,12 +41,29 @@ const LittelPaper = ({ label, deleteCol }) => {
 };
 
 const ModalProject = ({ open, setOpen }) => {
+  const [addKanban, isLoading] = useAddKanbanMutation();
+
   const [projectInfo, setProjectInfo] = useState({
-    idCreator: "",
-    projectName: "",
-    privacy: true,
-    cols: ["Stories", "Terminées"],
+    creatorId: 3,
+    name: "",
+    isPrivate: true,
+    description: "",
+    creationDate: new Date(),
+    dateLimit: "",
+    taskLists: [
+      { tasks: null, title: "Stories" },
+      { tasks: null, title: "Terminées" },
+    ],
+    userIds: [],
   });
+
+  const handleClick = async () => {
+    try {
+      await addKanban(projectInfo);
+    } catch (error) {
+      alert();
+    }
+  };
 
   const [newCol, setNewCol] = useState("");
   const handleChange = (e) => {
@@ -54,17 +73,24 @@ const ModalProject = ({ open, setOpen }) => {
   const deleteCol = (label) => {
     setProjectInfo({
       ...projectInfo,
-      cols: projectInfo.cols.filter((col) => col !== label),
+      taskLists: projectInfo.taskLists.filter((col) => col.title !== label),
     });
   };
 
   const handleAddCol = () => {
     console.log(newCol);
-    if (newCol === "" || projectInfo.cols.includes(newCol)) return;
-    setProjectInfo({ ...projectInfo, cols: [...projectInfo.cols, newCol] });
+    if (
+      newCol === "" ||
+      projectInfo.taskLists.includes({ title: newCol, tasks: null })
+    )
+      return;
+
+    setProjectInfo({
+      ...projectInfo,
+      taskLists: [...projectInfo.taskLists, { title: newCol, tasks: null }],
+    });
     setNewCol("");
   };
-  const handleClick = () => {};
   const handleClose = () => {
     setOpen(false);
   };
@@ -79,25 +105,52 @@ const ModalProject = ({ open, setOpen }) => {
         horizontal: "left",
       }}
     >
-      <Box display="flex" flexDirection={"column"} padding={3} width="400px">
+      <Box
+        display="flex"
+        flexDirection={"column"}
+        rowGap={1}
+        padding={3}
+        width="400px"
+      >
         <TextField
           type="text"
           size="small"
           placeholder="Project Name"
-          name="projectName"
+          name="name"
           onChange={handleChange}
-          value={projectInfo.projectName}
+          value={projectInfo.name}
         />
+
+        <TextField
+          type="text"
+          size="small"
+          placeholder="Project Description"
+          name="description"
+          onChange={handleChange}
+          value={projectInfo.description}
+        />
+
         <FormControlLabel
           control={
             <Switch
-              name="privacy"
+              name="isPrivate"
               onChange={handleChange}
-              value={projectInfo.privacy}
+              value={projectInfo.isPrivate}
             />
           }
           label="private"
         />
+
+        <TextField
+          type={"date"}
+          size="small"
+          name="dateLimit"
+          onChange={handleChange}
+          value={projectInfo.dateLimit}
+          placeholder="Date limit"
+          fullWidth
+        />
+
         <TextField
           placeholder="add a new col"
           size="small"
@@ -114,14 +167,14 @@ const ModalProject = ({ open, setOpen }) => {
           }}
         />
         <Grid container display={"flex"} minHeight="75px">
-          {projectInfo.cols.map((col) => (
-            <Grid key={col}>
-              <LittelPaper label={col} deleteCol={deleteCol} />{" "}
+          {projectInfo.taskLists.map((col) => (
+            <Grid key={col.title}>
+              <LittelPaper label={col.title} deleteCol={deleteCol} />{" "}
             </Grid>
           ))}
         </Grid>
 
-        <Button>Create Project </Button>
+        <Button onClick={handleClick}> Create Project </Button>
       </Box>
     </Popover>
   );

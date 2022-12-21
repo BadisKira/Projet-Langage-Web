@@ -13,7 +13,7 @@ export const KanbanApiSlice = ApiSlice.injectEndpoints({
         }),
         addKanban: builder.mutation({
             query: kanban => ({
-                query: "/kanbans",
+                query: "/kanban/create",
                 method: "POST",
                 body: { ...kanban }
             }), invalidatesTags: ['kanbans']

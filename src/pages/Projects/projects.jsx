@@ -77,7 +77,7 @@ const Projects = () => {
             rowSpacing={3}
           >
             {["p", "f", "cul", "mo", "lp", "a", "z", "q", "r", "m"].map((l) => (
-              <Grid item xs={12} sm={12} md={6} lg={4}>
+              <Grid key={l} item xs={12} sm={12} md={6} lg={4}>
                 <Project />
               </Grid>
             ))}
