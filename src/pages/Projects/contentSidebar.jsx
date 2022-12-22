@@ -85,7 +85,14 @@ const ContentSidebar = () => {
       </SortAccordion>
       {/**Fin du troisieme trie */}
 
-      <Button sx={{ marginTop: 2 }} variant="contained">
+      <Button
+        sx={{
+          marginTop: 2,
+          background: "rgba(0,0,0,.3)",
+          "&:hover": { background: "rgba(0,0,0,.35)" },
+        }}
+        variant="contained"
+      >
         Sort
       </Button>
     </Stack>

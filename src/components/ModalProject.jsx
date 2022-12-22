@@ -174,7 +174,17 @@ const ModalProject = ({ open, setOpen }) => {
           ))}
         </Grid>
 
-        <Button onClick={handleClick}> Create Project </Button>
+        <Button
+          onClick={handleClick}
+          sx={{
+            color: "white",
+            background: "rgba(0,0,0,.3)",
+            "&:hover": { background: "rgba(0,0,0,.35)" },
+          }}
+        >
+          {" "}
+          Create Project{" "}
+        </Button>
       </Box>
     </Popover>
   );

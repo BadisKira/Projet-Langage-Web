@@ -81,6 +81,8 @@ const Home = () => {
                 textAlign: "center",
                 marginTop: "15px",
                 marginBottom: "15px",
+                background: "rgba(0,0,0,.3)",
+                "&:hover": { background: "rgba(0,0,0,.35)" },
               }}
             >
               Come with us
@@ -103,6 +105,7 @@ const Home = () => {
             style={{
               height: "400px",
               width: "auto",
+              maxWidth: "100%",
             }}
             src={ImageLog}
             alt="Image icon"
@@ -125,7 +128,7 @@ const Home = () => {
         <Grid container>
           {reviews.map(({ id, name, review }) => {
             return (
-              <Grid item key={id} xs={6} md={4} sx={{}}>
+              <Grid item key={id} xs={6} md={4}>
                 <Stack
                   sx={{
                     width: "80%",
@@ -133,6 +136,8 @@ const Home = () => {
                     borderRadius: "15px 0px 15px 0px",
                     padding: "10px",
                     background: "rgba(0,0,0,.3)",
+                    boxShadow:
+                      " rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset",
                   }}
                 >
                   <Typography

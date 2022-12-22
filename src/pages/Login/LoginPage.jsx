@@ -170,7 +170,11 @@ const LoginPage = () => {
                   <Button
                     variant="contained"
                     size="large"
-                    sx={{ textTransform: "capitalize" }}
+                    sx={{
+                      textTransform: "capitalize",
+                      background: "rgba(0,0,0,.3)",
+                      "&:hover": { background: "rgba(0,0,0,.35)" },
+                    }}
                     type="submit"
                   >
                     Send

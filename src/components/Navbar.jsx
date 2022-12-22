@@ -40,7 +40,14 @@ function Navbar() {
 
   const [isConnected, setIsConnected] = React.useState(false);
   return (
-    <AppBar position="static" elevation={5}>
+    <AppBar
+      position="static"
+      elevation={5}
+      sx={{
+        background: "rgba(0,0,0,.3)",
+        "&:hover": { background: "rgba(0,0,0,.35)" },
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import KanbanLayout from "./layouts/KanbanLayout";
 import PageLayout from "./layouts/pageLayout";
 import Page404 from "./pages/error/page404";
-import Home from "./pages/Home/home";
+import Home from "./pages/home/home";
 import Kanban from "./pages/Kanban/Kanban";
 import LoginPage from "./pages/Login/LoginPage";
 import ContentSidebar from "./pages/Projects/contentSidebar";
