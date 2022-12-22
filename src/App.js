@@ -19,7 +19,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
           <Route path="projects" element={<Projects />} />
-          <Route path="/profile" element={<ProtectedRoute ><ProfileTabs /></ProtectedRoute>} />
+          <Route path="/profile/:id" element={<ProtectedRoute ><ProfileTabs /></ProtectedRoute>} />
 
         </Route>
         <Route path="project/:id" element={<KanbanLayout />}>

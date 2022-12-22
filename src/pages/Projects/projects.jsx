@@ -9,15 +9,19 @@ import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Project from "./project";
-import ModalProject from "../../components/ModalProject";
+import ModalProject from "./ModalProject";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import IconButton from "@mui/material/IconButton";
+
+import { useGetPublicKanbansQuery } from "../../features/kanban/KanbanApiSlice";
 const Projects = () => {
   const theme = useTheme();
   const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"));
   const [openSideBar, setOpenSideBar] = React.useState(false);
-
   const [openModalProject, setOpenModalProject] = useState(false);
+
+  const { data: kanbans, isLoading, isSuccess } = useGetPublicKanbansQuery();
+  console.log("kanbans ==> ", kanbans);
 
   return (
     <Container maxWidth={"xl"} sx={{ marginTop: "20px" }}>
@@ -76,11 +80,27 @@ const Projects = () => {
             columnSpacing={4}
             rowSpacing={3}
           >
-            {["p", "f", "cul", "mo", "lp", "a", "z", "q", "r", "m"].map((l) => (
-              <Grid key={l} item xs={12} sm={12} md={6} lg={4}>
-                <Project />
-              </Grid>
-            ))}
+            {/* {kanbans.length == 0 ? (
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "250px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="h3"> No , projects</Typography>
+              </Box>
+            ) : (
+              <>
+                {["r", "m"].map((l) => (
+                  <Grid key={l} item xs={12} sm={12} md={6} lg={4}>
+                    <Project />
+                  </Grid>
+                ))}
+              </>
+            )} */}
           </Grid>
         </Grid>
       </Grid>

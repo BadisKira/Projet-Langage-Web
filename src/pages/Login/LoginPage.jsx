@@ -57,21 +57,15 @@ const LoginPage = () => {
           password: form.password,
         }).unwrap();
 
-        dispatch(
-          setCredentials({
-            user: {
-              id: userData.id,
-              username: userData.username,
-              firstname: userData?.firstName || "Aouaouche",
-              lastname: userData?.lastName || "Lamriou",
-            },
-            accessToken: userData.authToken,
-          })
-        );
+        dispatch(setCredentials({ user: userData }));
         navigate(-1);
       } catch (error) {}
     }
   };
+
+  React.useEffect(() => {
+    if (localStorage.getItem("user")) navigate("/");
+  }, []);
 
   return (
     <Grid container sx={{ minHeight: "100vh" }}>
@@ -180,9 +174,9 @@ const LoginPage = () => {
                     Send
                   </Button>
 
-                  <Typography variant="subtitle1" component={"p"}>
-                    {signupRes.isError && "erreur de registration"}
-                    {authRes.isError && "erreur d'authentification"}
+                  <Typography variant="subtitle2" component={"p"}>
+                    {signupRes.isError && "erreur , verify your inputs "}
+                    {authRes.isError && "username or password incorrect"}
                   </Typography>
 
                   <Box>

@@ -8,10 +8,12 @@ const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8080/api',
     credentials: "include", // send back  http only secure cookie in every query
     prepareHeaders: (headers, { getState }) => {
-        const token = getState().auth.token;
-        console.log("get state ==> ", token);
+        const token = JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")).authToken : getState().auth.authToken
         if (token) {
+            console.log("je ssuis juste avanr de mettre le header");
             headers.set('Authorization', `Bearer ${token}`);
+
+            console.log(headers);
         }
         return headers;
     }
@@ -20,6 +22,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
+    console.log(result);
     if (result?.error?.originalStatus === 403) {
         // ici le test n'est pas universel  , faut voir ton back
         console.log('sending refresh token');
@@ -48,6 +51,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const ApiSlice = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['cols', 'tasks'],
+    tagTypes: ['cols', 'tasks', 'kanbans', "profile"],
     endpoints: builder => ({})
 }); 

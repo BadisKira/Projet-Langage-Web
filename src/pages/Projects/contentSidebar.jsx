@@ -4,6 +4,10 @@ import Stack from "@mui/material/Stack";
 import { FormLabel, TextField, Typography } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+
 import Checkbox from "@mui/material/Checkbox";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -27,62 +31,64 @@ const SortAccordion = ({ children, title }) => {
 };
 
 const ContentSidebar = () => {
+  const [triValue, setTrieValue] = React.useState({
+    al: "asc",
+    date: "",
+    projet: "",
+  });
+  const handleChange = () => {};
   return (
     <Stack padding={3} bgcolor="whitesmoke">
-      <Typography variant="h5" comp="h4">
-        Sort by :
-      </Typography>
+      <Typography variant="h5" comp="h4"></Typography>
       {/*  Premier trie*/}
-      <SortAccordion title="Alphabetic order ">
+      <SortAccordion title="Sort by :">
         <FormGroup>
-          <FormControlLabel
-            name="al"
-            control={<Checkbox name="al" size="small" />}
-            label="A-Z"
-          />
-          <FormControlLabel
-            name="al"
-            control={<Checkbox name="al" size="small" />}
-            label="Z-A"
-          />
+          <FormLabel id="demo-controlled-radio-buttons-group">
+            Alphabetic order
+          </FormLabel>
+
+          <RadioGroup value={triValue.al} onChange={handleChange}>
+            <FormControlLabel value="asc" control={<Radio />} label="A-z" />
+            <FormControlLabel value="desc" control={<Radio />} label="Z-a" />
+          </RadioGroup>
+        </FormGroup>
+        <FormGroup>
+          <FormLabel id="demo-controlled-radio-buttons-group">
+            Deadline
+          </FormLabel>
+
+          <RadioGroup value={triValue.data} onChange={handleChange}>
+            <FormControlLabel value="asc" control={<Radio />} label="Early" />
+            <FormControlLabel value="desc" control={<Radio />} label="Latest" />
+          </RadioGroup>
+        </FormGroup>
+        <FormGroup>
+          <FormLabel id="demo-controlled-radio-buttons-group">
+            Projects
+          </FormLabel>
+
+          <RadioGroup value={triValue.data} onChange={handleChange}>
+            <FormControlLabel value="all" control={<Radio />} label="public" />
+            <FormControlLabel
+              value="private"
+              control={<Radio />}
+              label="Private"
+            />
+            <FormControlLabel
+              value="public"
+              control={<Radio />}
+              label="public"
+            />
+          </RadioGroup>
         </FormGroup>
       </SortAccordion>
+
       {/**Fin du Premier trie  */}
       {/**Deuxieme Trie */}
-      <SortAccordion title="Deadline of realization">
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox size="small" />}
-            label="Earliest date"
-          />
-          <FormControlLabel
-            control={<Checkbox size="small" />}
-            label="Latest date"
-          />
-          <FormControlLabel
-            control={<TextField size="small" type={"date"} />}
-            label="choose a date "
-          />
-        </FormGroup>
-      </SortAccordion>
+      {/* <SortAccordion title="Deadline"></SortAccordion> */}
       {/**Fin du deuxieme Trie */}
       {/**Troisieme Trie */}
-      <SortAccordion title="Projects ">
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox size="small" />}
-            label="My projects"
-          />
-          <FormControlLabel
-            control={<Checkbox size="small" />}
-            label="public projects"
-          />
-          <FormControlLabel
-            control={<Checkbox size="small" />}
-            label="private projects"
-          />
-        </FormGroup>
-      </SortAccordion>
+      {/* <SortAccordion title="Projects "></SortAccordion> */}
       {/**Fin du troisieme trie */}
 
       <Button

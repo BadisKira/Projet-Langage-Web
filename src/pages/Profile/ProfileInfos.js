@@ -20,9 +20,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
 
 import ModifyForm from "./ModifyForm";
-
+import { logOut } from "../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-// import { logoutClient } from "../../redux/clientSlice";
 import { useNavigate } from "react-router-dom";
 
 const ProfileInfos = () => {
@@ -86,58 +85,16 @@ const ProfileInfos = () => {
                 </Typography>
               </Box>
             </Box>
-            <Box
-              component="fieldset"
-              my={2}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                px: 4,
-                py: 2,
-                borderColor: "#e5e5e5",
-                borderRadius: "10px",
-                alignItems: "flex-start",
-                width: { xs: "100%", sm: "80%", md: "80%" },
-              }}
-            >
-              <legend>
-                {" "}
-                <Typography
-                  variant="h6"
-                  color="#515151"
-                  sx={{ fontSize: { xs: 16, sm: 22 } }}
-                >
-                  {" "}
-                  Plus d'informations:
-                </Typography>{" "}
-              </legend>
 
-              <Typography
-                variant="h6"
-                color="#515151"
-                sx={{ fontSize: { xs: 16, sm: 20 } }}
-              >
-                {" "}
-                <LocalPhoneIcon sx={{ fontSize: { xs: 16, sm: 20 } }} />
-                {clientData.phone}
-              </Typography>
-              <Typography
-                variant="h6"
-                color="#515151"
-                sx={{ fontSize: { xs: 16, sm: 20 } }}
-              >
-                {" "}
-                <EmailIcon sx={{ fontSize: { xs: 16, sm: 20 } }} />{" "}
-                {clientData.email}
-              </Typography>
-            </Box>
+
             <Button
               size="large"
               variant="text"
               sx={{ color: "#CF2F2F", width: "45%" }}
               startIcon={<LogoutIcon />}
               onClick={() => {
-                // dispatch(logoutClient());
+                dispatch(logOut());
+                localStorage.removeItem('user');
                 navigate('/');
               }}
             >

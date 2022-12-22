@@ -2,7 +2,13 @@ import { ApiSlice } from "../../app/api/apiSlice";
 
 export const KanbanApiSlice = ApiSlice.injectEndpoints({
     endpoints: builder => ({
-        getPublicKanbans: builder.query({}),
+        getPublicKanbans: builder.query({
+            query: () => ({
+                url: `/kanban/public`,
+                method: "GET",
+            }),
+            providesTags: ['kanbans']
+        }),
         getKanbans: builder.query({}),
         getOneKanban: builder.query({
             query: id => ({
@@ -11,16 +17,16 @@ export const KanbanApiSlice = ApiSlice.injectEndpoints({
             }),
             providesTags: ['kanbans']
         }),
-        addKanban: builder.mutation({
+        createKanban: builder.mutation({
             query: kanban => ({
-                query: "/kanban/create",
+                url: "/kanban/create",
                 method: "POST",
                 body: { ...kanban }
             }), invalidatesTags: ['kanbans']
         }),
         deleteKanban: builder.mutation({
             query: id => ({
-                query: `/kanbans?id=${id}`,
+                url: `/kanbans?id=${id}`,
                 method: "DELETE",
             }), invalidatesTags: ['kanbans']
         }),
@@ -38,7 +44,7 @@ export const {
     useGetOneKanbanQuery,
     useInvitePeopleMutation,
     useDeleteKanbanMutation,
-    useAddKanbanMutation,
+    useCreateKanbanMutation,
     useGetPublicKanbansQuery,
 
 } = KanbanApiSlice; 

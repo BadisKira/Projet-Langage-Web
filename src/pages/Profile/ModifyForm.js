@@ -13,17 +13,11 @@ import { useNavigate } from "react-router-dom";
 
 function ModifyForm() {
   const dispatch = useDispatch();
-  //const clientData = useSelector(state => state.client);
-  const [clientInfo, setClientInfo] = useState({ nom: "Lamriou", prenom: "Celena", phone: "05123269", idClient: '15', "email": "Hammadache@badis.com" });
-  const clientData = { nom: "Lamriou", prenom: "Celena", phone: "05123269", idClient: '15', "email": "Hammadache@badis.com" }
+
+  const [clientInfo, setClientInfo] = useState(JSON.parse(localStorage.getItem("user")));
 
   const navigate = useNavigate();
-  const [emailBase, setEmailBase] = useState({ emailBase: "" });
 
-  // useEffect(() => {
-  //   setClientInfo(clientData);
-  //   setEmailBase(clientData.email);
-  // }, [clientData]);
 
   const handelChangeClientInfo = (e) => {
     setClientInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -31,10 +25,6 @@ function ModifyForm() {
 
   const handelSClickUpdate = (e) => {
     e.preventDefault();
-    //dispatch(updateClient({ ...clientInfo, emailBase: emailBase })).then(res => {
-    //navigate('/login');
-
-    //})
   }
   return (
     <Box
@@ -52,70 +42,49 @@ function ModifyForm() {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handelChangeClientInfo}
-            value={clientInfo.nom}
+            value={clientInfo.firstName}
             size="small"
             name="nom"
             required
             fullWidth
             id="NomModifier"
-            label="Nom"
+            label="firstName"
             autoFocus
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handelChangeClientInfo}
-            value={clientInfo.prenom}
+            value={clientInfo.lastName}
             size="small"
             required
             fullWidth
             id="PrenomModifier"
-            label="Prénom"
-            name="prenom"
+            label="Last Name"
+            name="lastName"
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             onChange={handelChangeClientInfo}
-            value={clientInfo.email}
+            value={clientInfo.username}
             size="small"
             required
             fullWidth
-            id="emailModifier"
-            label="Adresse E-mail"
-            name="email"
-            type="email"
+            label="User Name"
+            name="username"
+            type="username"
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            onChange={handelChangeClientInfo}
-            value={clientInfo.phone}
-            size="small"
-            required
-            fullWidth
-            name="phone"
-            label="Numéro de téléphone"
-            type="tel"
-            id="NumTelModifier"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            onChange={handelChangeClientInfo}
-            value={clientInfo.password}
-            size="small"
-            required
-            fullWidth
-            name="MDP"
-            label="password"
-            id="passwordModifier"
-          />
-        </Grid>
+
       </Grid>
       <Button
         variant="contained"
-        sx={{ mt: 3, mb: 2, backgroundColor: "#263a49", width: "50%" }}
+        sx={{
+          mt: 3, mb: 2, backgroundColor: "rgba(0,0,0,.3) ", "&:hover": {
+            backgroundColor: "rgba(0,0,0,.35)"
+          }, width: "50%"
+        }}
         onClick={handelSClickUpdate}
       >
         Enregistrer

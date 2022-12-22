@@ -1,5 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 import Stack from "@mui/material/Stack";
 import KanbanHeader from "./KanbanHeader";
 import KanbanTable from "./KanbanTable";
@@ -11,13 +13,15 @@ import Loading from "../../components/Loading";
 
 const Kanban = () => {
   const { id } = useParams();
-  const {
-    data: kanban,
-    isLoading,
-    isError,
-    error,
-  } = useGetOneKanbanQuery(Number(id));
-
+  // const {
+  //   data: kanban,
+  //   isLoading,
+  //   isError,
+  //   error,
+  // } = useGetOneKanbanQuery(Number(id));
+  const isLoading = false;
+  const isError = false;
+  const kanban = [{}];
   return (
     <Stack
       sx={{
@@ -29,15 +33,25 @@ const Kanban = () => {
       ) : (
         <>
           {isError ? (
-            <h1>ERRROROROROR </h1>
+            <Box
+              sx={{
+                width: "100%",
+                height: "250px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography variant="h3"> No, Kanban</Typography>
+            </Box>
           ) : (
             <>
               <KanbanHeader
-                id={id}
-                nameK={kanban[0].nameK}
-                idCreator={kanban[0].idCreator}
-                privacy={kanban[0].privacy}
-                dateCreation={kanban[0].dateCreation}
+                id={id || 9}
+                nameK={kanban[0].nameK || "ee"}
+                idCreator={kanban[0].idCreator || "patrick"}
+                privacy={kanban[0].privacy || "eer"}
+                dateCreation={kanban[0].dateCreation || "17-10-2029"}
               />
 
               <KanbanTable id={Number(id)} />

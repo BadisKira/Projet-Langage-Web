@@ -14,9 +14,9 @@ import { Droppable } from "react-beautiful-dnd";
 import { useGetTasksQuery } from "../features/tasks/TaskSliceApi";
 import { addNewCol } from "../features/cols/ColSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-const Col = ({ nameCol, id, idKanban }) => {
+const Col = ({ nameCol, id, idKanban, tasks = [] }) => {
   const {
-    data: tasks,
+    data: tass,
     isLoading,
     isError,
     error,

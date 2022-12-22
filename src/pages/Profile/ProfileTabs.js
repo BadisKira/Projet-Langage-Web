@@ -13,7 +13,22 @@ import InvitationsList from "./InvitationsList";
 import ProjectsList from "./ProjectList";
 import Container from "@mui/material/Container"
 
+import { useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useGetProfileQuery } from "../../features/profile/profileApiSlice";
+
 function TabPanel(props) {
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if ((id != JSON.parse(localStorage.getItem("user")).id))
+      navigate("/404");
+  }, [])
+  const dispatch = useDispatch();
+
+  const { data: profile, isLoading, isSuccess } = useGetProfileQuery(id);
+
   const { children, value, index, ...other } = props;
 
   return (

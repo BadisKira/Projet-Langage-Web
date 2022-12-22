@@ -9,19 +9,25 @@ import Typography from "@mui/material/Typography";
 
 import { useCreateTaskMutation } from "../features/tasks/TaskSliceApi";
 
-import React from "react";
+import React, { useState } from "react";
 import { Select, MenuItem } from "@mui/material";
 
-const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
+const ModelTask = ({
+  openModalTask,
+  setOpenModalTask,
+  idCol,
+  title,
+  taskInfo = null,
+}) => {
   const [createTask] = useCreateTaskMutation();
+  const [mode, setMode] = useState(taskInfo == null ? 0 : 1); // 0 create task 1 update task
   const [task, setTask] = React.useState({
     nameT: "",
     descriptionT: "",
     username: "",
     dateLimit: new Date(),
-    nameCol: nameCol,
+    title: title,
     idCol: idCol,
-    importance: "",
   });
   const handelChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
@@ -29,13 +35,12 @@ const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
   const handelClose = () => {
     setOpenModalTask(false);
     setTask({
-      nameT: "",
-      descriptionT: "",
-      username: "",
-      dateLimit: null,
-      nameCol: "",
-      idCol: null,
-      importance: "",
+      nameT: taskInfo.nameT || "",
+      descriptionT: taskInfo.descriptionT || "",
+      username: taskInfo.username || "",
+      dateLimit: taskInfo.dateLimit || null,
+      title: title,
+      idCol: idCol,
     });
   };
   const handelAdd = async () => {
@@ -58,9 +63,6 @@ const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
         <Typography variant="h6" comp="h4">
           Add a new Task
         </Typography>
-        <Box>
-          <TextField type="color" size="small" />
-        </Box>
       </DialogTitle>
       <DialogContent>
         <Box sx={{ height: "250px", width: "450px" }}>
@@ -75,7 +77,7 @@ const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
               type="text"
               label="task name"
               name={"nameT"}
-              value={task.name}
+              value={task.nameT}
             />
             <TextField
               onChange={handelChange}
@@ -85,7 +87,7 @@ const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
               rows={3}
               maxRows={3}
               label="Description"
-              value={task.desc}
+              value={task.descriptionT}
               name="descriptionT"
             />
           </Box>
@@ -95,7 +97,7 @@ const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
               onChange={handelChange}
               label="Task's user"
               size="small"
-              value={task.user}
+              value={task.username}
               name="username"
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -111,8 +113,8 @@ const ModelTask = ({ openModalTask, setOpenModalTask, idCol, nameCol }) => {
             />
           </Stack>
         </Box>
-        <Button onClick={handelAdd}>Create the task</Button>
-        <Button onClick={handelClose}>Close sa mere</Button>
+        <Button onClick={handelAdd}>Apply</Button>
+        <Button onClick={handelClose}>Close </Button>
       </DialogContent>
     </Dialog>
   );

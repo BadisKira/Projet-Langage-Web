@@ -28,7 +28,7 @@ const Project = ({ id = 1 }) => {
           15/11/2022
         </Typography>
         <Typography variant="h6" component="div">
-          Project Lpo de merde !!
+          Project !!
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Hammadache Badis

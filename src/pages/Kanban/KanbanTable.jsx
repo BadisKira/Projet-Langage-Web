@@ -126,7 +126,17 @@ const KanbanTable = ({ id }) => {
         ) : (
           <>
             {isError == true ? (
-              <h1> JE SUIS UN ERREUR {error} </h1>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "250px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="h3"> Error , Empty Kanban</Typography>
+              </Box>
             ) : (
               <>
                 {cols.map((col) => (
@@ -138,7 +148,7 @@ const KanbanTable = ({ id }) => {
         )}
 
         {/* CE QUE J'APPELLE UN COL ADD */}
-        <Box
+        {/* <Box
           sx={{
             maxWidth: "400px",
             background: "rgba(0,0,0,0.2)",
@@ -184,7 +194,7 @@ const KanbanTable = ({ id }) => {
               ),
             }}
           />
-        </Box>
+        </Box> */}
         {/**LA FIN DE CE QUE J'APPELLE UN COL ADD */}
       </Box>
     </DragDropContext>

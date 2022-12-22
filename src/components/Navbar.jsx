@@ -14,8 +14,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SchemaIcon from "@mui/icons-material/Schema";
 import LogoImg from "../assets/images/logo.png";
-
-import { Link } from "react-router-dom";
+import { logOut } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 const pages = [{ link: "/projects", name: "Projects" }];
 const settings = ["Profile", "Logout"];
 
@@ -39,6 +40,23 @@ function Navbar() {
   };
 
   const [isConnected, setIsConnected] = React.useState(false);
+  React.useEffect(() => {
+    if (localStorage.getItem("user")) setIsConnected(true);
+    else setIsConnected(false);
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handelClickMenuItem = (itemClicked) => {
+    if (itemClicked == "Logout") {
+      dispatch(logOut());
+      setIsConnected(false);
+      navigate("/");
+    } else if (itemClicked == "Profile") {
+      const id = JSON.parse(localStorage.getItem("user")).id;
+      navigate(`/profile/${id}`);
+    }
+  };
   return (
     <AppBar
       position="static"
@@ -150,7 +168,11 @@ function Navbar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar>
+                    {JSON.parse(
+                      localStorage.getItem("user")
+                    ).username[0].toUpperCase()}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
 
@@ -172,7 +194,14 @@ function Navbar() {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography
+                      textAlign="center"
+                      onClick={() => {
+                        handelClickMenuItem(setting);
+                      }}
+                    >
+                      {setting}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
