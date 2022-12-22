@@ -9,7 +9,15 @@ export const ProfileApiSlice = ApiSlice.injectEndpoints({
                 method: 'GET',
             }),
             invalidatesTags: ['profile']
+        }),
+        getInvitations: builder.query({
+            query: id => ({
+                url: `/user/profile/invitations/${id}`,
+                method: 'GET',
+            }),
+            invalidatesTags: ['profile']
         })
+
     })
 
 });

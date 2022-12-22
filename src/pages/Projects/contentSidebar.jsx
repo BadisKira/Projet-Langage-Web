@@ -32,11 +32,14 @@ const SortAccordion = ({ children, title }) => {
 
 const ContentSidebar = () => {
   const [triValue, setTrieValue] = React.useState({
-    al: "asc",
+    al: "",
     date: "",
     projet: "",
   });
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    setTrieValue({ ...triValue, [e.target.name]: e.target.value });
+    console.log(triValue);
+  };
   return (
     <Stack padding={3} bgcolor="whitesmoke">
       <Typography variant="h5" comp="h4"></Typography>
@@ -48,8 +51,18 @@ const ContentSidebar = () => {
           </FormLabel>
 
           <RadioGroup value={triValue.al} onChange={handleChange}>
-            <FormControlLabel value="asc" control={<Radio />} label="A-z" />
-            <FormControlLabel value="desc" control={<Radio />} label="Z-a" />
+            <FormControlLabel
+              name="al"
+              value="asc"
+              control={<Radio />}
+              label="A-z"
+            />
+            <FormControlLabel
+              name="al"
+              value="desc"
+              control={<Radio />}
+              label="Z-a"
+            />
           </RadioGroup>
         </FormGroup>
         <FormGroup>
@@ -57,9 +70,19 @@ const ContentSidebar = () => {
             Deadline
           </FormLabel>
 
-          <RadioGroup value={triValue.data} onChange={handleChange}>
-            <FormControlLabel value="asc" control={<Radio />} label="Early" />
-            <FormControlLabel value="desc" control={<Radio />} label="Latest" />
+          <RadioGroup value={triValue.date} onChange={handleChange}>
+            <FormControlLabel
+              name="date"
+              value="early"
+              control={<Radio />}
+              label="Early"
+            />
+            <FormControlLabel
+              name="date"
+              value="late"
+              control={<Radio />}
+              label="Latest"
+            />
           </RadioGroup>
         </FormGroup>
         <FormGroup>
@@ -67,14 +90,21 @@ const ContentSidebar = () => {
             Projects
           </FormLabel>
 
-          <RadioGroup value={triValue.data} onChange={handleChange}>
-            <FormControlLabel value="all" control={<Radio />} label="public" />
+          <RadioGroup value={triValue.projet} onChange={handleChange}>
             <FormControlLabel
+              name="projet"
+              value="all"
+              control={<Radio />}
+              label="All"
+            />
+            <FormControlLabel
+              name="projet"
               value="private"
               control={<Radio />}
               label="Private"
             />
             <FormControlLabel
+              name="projet"
               value="public"
               control={<Radio />}
               label="public"
@@ -82,14 +112,6 @@ const ContentSidebar = () => {
           </RadioGroup>
         </FormGroup>
       </SortAccordion>
-
-      {/**Fin du Premier trie  */}
-      {/**Deuxieme Trie */}
-      {/* <SortAccordion title="Deadline"></SortAccordion> */}
-      {/**Fin du deuxieme Trie */}
-      {/**Troisieme Trie */}
-      {/* <SortAccordion title="Projects "></SortAccordion> */}
-      {/**Fin du troisieme trie */}
 
       <Button
         sx={{
@@ -106,35 +128,3 @@ const ContentSidebar = () => {
 };
 
 export default ContentSidebar;
-/**
- * <Box>Mes projets de merde</Box>
-      <Box>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-        voluptatem cupiditate totam amet magni! Explicabo nesciunt facilis
-      </Box>
-      <Box>
-        <Typography component={"p"} variant="subtitle1">
-          Trier par :{" "}
-        </Typography>
-        <Box>
-          <FormLabel>Order alphabetic A-Z </FormLabel>
-          <TextField variant="standard" type={"checkbox"} />
-          <FormLabel>Order alphabetic Z-A </FormLabel>
-          <TextField variant="standard" type={"checkbox"} />
-        </Box>
-
-        <Box alignItems={"baseline"}>
-          <FormLabel>Date fin de projet </FormLabel>
-          <TextField variant="standard" size="small" type={"date"} />
-        </Box>
-        <Box>
-          <FormLabel>Mes projets </FormLabel>
-          <TextField variant="standard" type={"checkbox"} />{" "}
-        </Box>
-
-        <Box>
-          <FormLabel>Mes projets </FormLabel>
-          <TextField variant="standard" type={"checkbox"} />{" "}
-        </Box>
-      </Box>
- */

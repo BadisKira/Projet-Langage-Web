@@ -5,23 +5,43 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import KanbanHeader from "./KanbanHeader";
 import KanbanTable from "./KanbanTable";
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetOneKanbanQuery } from "../../features/kanban/KanbanApiSlice";
 import Loading from "../../components/Loading";
 
 // Verify if i'm allowed in this project
 
-const Kanban = () => {
-  const { id } = useParams();
+const Kanban = ({
+  id,
+  creatorId,
+  dateLimit,
+  isPrivate,
+  name,
+  description,
+  userIds,
+}) => {
+  // const { id } = useParams();
   // const {
   //   data: kanban,
   //   isLoading,
   //   isError,
   //   error,
   // } = useGetOneKanbanQuery(Number(id));
+  const navigate = useNavigate();
   const isLoading = false;
   const isError = false;
   const kanban = [{}];
+
+  React.useEffect(() => {
+    if (isPrivate) {
+      const userId =
+        JSON.parse(localStorage.getItem("user")) &&
+        JSON.parse(localStorage.getItem("user")).id;
+
+      if (!userIds.includes(userId) && !creatorId == userId) navigate("/");
+    }
+  }, []);
+
   return (
     <Stack
       sx={{
@@ -47,14 +67,14 @@ const Kanban = () => {
           ) : (
             <>
               <KanbanHeader
-                id={id || 9}
-                nameK={kanban[0].nameK || "ee"}
-                idCreator={kanban[0].idCreator || "patrick"}
-                privacy={kanban[0].privacy || "eer"}
-                dateCreation={kanban[0].dateCreation || "17-10-2029"}
+                id={id}
+                nameK={name}
+                idCreator={creatorId || "patrick"}
+                privacy={isPrivate || "eer"}
+                dateCreation={dateLimit}
               />
 
-              <KanbanTable id={Number(id)} />
+              {/* <KanbanTable taskLists={taskLists} userIds={userIds} /> */}
             </>
           )}
         </>

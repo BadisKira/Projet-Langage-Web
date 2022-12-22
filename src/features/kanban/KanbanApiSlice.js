@@ -9,7 +9,12 @@ export const KanbanApiSlice = ApiSlice.injectEndpoints({
             }),
             providesTags: ['kanbans']
         }),
-        getKanbans: builder.query({}),
+        getOneUserKanbans: builder.query({
+            query: (iduser) => ({
+                url: `/kanban/getUserKanbans/${iduser}`,
+                method: "GET"
+            }), providesTags: ["kanbans"]
+        }),
         getOneKanban: builder.query({
             query: id => ({
                 url: `/kanbans?id=${id}`,
@@ -40,7 +45,7 @@ export const KanbanApiSlice = ApiSlice.injectEndpoints({
     })
 });
 export const {
-    useGetKanbansQuery,
+    useGetOneUserKanbansQuery,
     useGetOneKanbanQuery,
     useInvitePeopleMutation,
     useDeleteKanbanMutation,

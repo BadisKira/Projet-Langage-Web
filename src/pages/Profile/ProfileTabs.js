@@ -60,6 +60,7 @@ export default function VerticalTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const { id } = useParams();
 
   return (
     <Container maxWidth={"md"}
@@ -94,14 +95,14 @@ export default function VerticalTabs() {
       </Box>
       <Box >
         <TabPanel value={value} index={0}>
-          <ProfileInfos />
+          <ProfileInfos idUser={id} />
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          <ProjectsList />
+          <ProjectsList idUser={id} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <InvitationsList />
+          <InvitationsList idUser={id} />
         </TabPanel>
       </Box>
     </Container>

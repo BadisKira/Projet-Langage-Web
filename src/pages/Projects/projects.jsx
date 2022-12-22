@@ -14,6 +14,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import IconButton from "@mui/material/IconButton";
 
 import { useGetPublicKanbansQuery } from "../../features/kanban/KanbanApiSlice";
+import Loading from "../../components/Loading";
 const Projects = () => {
   const theme = useTheme();
   const mediaQuery = useMediaQuery(theme.breakpoints.down("sm"));
@@ -21,10 +22,9 @@ const Projects = () => {
   const [openModalProject, setOpenModalProject] = useState(false);
 
   const { data: kanbans, isLoading, isSuccess } = useGetPublicKanbansQuery();
-  console.log("kanbans ==> ", kanbans);
 
   return (
-    <Container maxWidth={"xl"} sx={{ marginTop: "20px" }}>
+    <Container maxWidth={"xl"} sx={{ marginBottom: "auto", marginTop: "20px" }}>
       {mediaQuery && (
         <Box>
           {" "}
@@ -80,27 +80,46 @@ const Projects = () => {
             columnSpacing={4}
             rowSpacing={3}
           >
-            {/* {kanbans.length == 0 ? (
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "250px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography variant="h3"> No , projects</Typography>
-              </Box>
+            {isLoading ? (
+              <Loading loading={true} />
             ) : (
               <>
-                {["r", "m"].map((l) => (
-                  <Grid key={l} item xs={12} sm={12} md={6} lg={4}>
-                    <Project />
-                  </Grid>
-                ))}
+                {!isSuccess ? (
+                  <div>Erreur tu connais </div>
+                ) : (
+                  <>
+                    {kanbans.length == 0 ? (
+                      <Box
+                        sx={{
+                          width: "100%",
+                          height: "250px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Typography variant="h3"> No , projects</Typography>
+                      </Box>
+                    ) : (
+                      <>
+                        {kanbans.map((kanban) => (
+                          <Grid
+                            key={kanban.id}
+                            item
+                            xs={12}
+                            sm={12}
+                            md={6}
+                            lg={4}
+                          >
+                            <Project {...kanban} />
+                          </Grid>
+                        ))}
+                      </>
+                    )}
+                  </>
+                )}
               </>
-            )} */}
+            )}
           </Grid>
         </Grid>
       </Grid>

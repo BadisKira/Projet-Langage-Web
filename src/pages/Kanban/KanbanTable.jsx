@@ -14,15 +14,47 @@ import {
 import { IconButton, TextField } from "@mui/material";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useGetTasksQuery } from "../../features/tasks/TaskSliceApi";
-const KanbanTable = ({ id }) => {
+const KanbanTable = ({ taskLists, userIds }) => {
   const [nameCol, setNameCol] = React.useState("");
-  const {
-    data: cols,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetColsFromKanbanQuery(id);
+  // const {
+  //   // data: cols,
+  //   isLoading,
+  //   isSuccess,
+  //   isError = false,
+  //   error,
+  // } = useGetColsFromKanbanQuery(id);
+
+  const isLoading = false;
+  const isError = false;
+  const cols = [
+    {
+      title: "Stories",
+      id: 1,
+      idKanban: 1,
+      tasks: [
+        {
+          id: 1,
+          nameT: "task 1 ",
+          index: 1,
+          descriptionT: "description de la tache",
+          nameCol: "Stories",
+          idCol: 1,
+          dateLimit: "11-12-2022",
+          username: "Badis",
+        },
+        {
+          id: 2,
+          nameT: "task 1 ",
+          index: 2,
+          descriptionT: "description de la tache",
+          nameCol: "Stories",
+          idCol: 1,
+          dateLimit: "11-12-2022",
+          username: "Badis",
+        },
+      ],
+    },
+  ];
 
   const [addNewCol] = useAddNewColMutation();
   /*

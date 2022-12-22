@@ -183,22 +183,11 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = useState("kanbanName");
   const [page, setPage] = useState(0);
   //const clientData = useSelector(state => state.client);
-  const [rows, setRows] = useState([{ idkanban: 1, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Kill" },
-  { idkanban: 2, kanbanOwner: 'Badis', kanbanName: "Aouaouche", actions: "Marry" }, { idkanban: 3, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }
-    , { idkanban: 93, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }, { idkanban: 53, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }, { idkanban: 7, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }]);
+  // const [rows, setRows] = useState([{ idkanban: 1, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Kill" },
+  // { idkanban: 2, kanbanOwner: 'Badis', kanbanName: "Aouaouche", actions: "Marry" }, { idkanban: 3, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }
+  //   , { idkanban: 93, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }, { idkanban: 53, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }, { idkanban: 7, kanbanOwner: 'Badis', kanbanName: "celena", actions: "Marry" }]);
 
-  // useEffect(() => {
-  //   setFavsInfo(clientData.favs.favoris);
-  // }, [clientData]);
-
-  // useEffect(() => {
-  //   let temp = [];
-  //   temp = favsInfo.map((fav) => {
-  //     return createData(fav.nomh, fav.adresseh, fav.villeh);
-  //   });
-  //   setRows(temp);
-  // }, [favsInfo]);
-
+  const rows = [];
 
 
   const handleRequestSort = (event, property) => {
