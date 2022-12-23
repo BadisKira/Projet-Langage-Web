@@ -7,129 +7,51 @@ import Button from "@mui/material/Button";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import Loading from "../../components/Loading";
 import { Droppable } from "react-beautiful-dnd";
-import {
-  useAddNewColMutation,
-  useGetColsFromKanbanQuery,
-} from "../../features/cols/ColApiSlice";
+import { useParams } from "react-router-dom";
+
 import { IconButton, TextField } from "@mui/material";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useGetTasksQuery } from "../../features/tasks/TaskSliceApi";
-const KanbanTable = ({ taskLists, userIds }) => {
+
+const KanbanTable = ({ tasksList, userIds, isPrivate, creatorId }) => {
   const [nameCol, setNameCol] = React.useState("");
-  // const {
-  //   // data: cols,
-  //   isLoading,
-  //   isSuccess,
-  //   isError = false,
-  //   error,
-  // } = useGetColsFromKanbanQuery(id);
+  const [cols, setCols] = React.useState([]);
 
-  const isLoading = false;
-  const isError = false;
-  const cols = [
-    {
-      title: "Stories",
-      id: 1,
-      idKanban: 1,
-      tasks: [
-        {
-          id: 1,
-          nameT: "task 1 ",
-          index: 1,
-          descriptionT: "description de la tache",
-          nameCol: "Stories",
-          idCol: 1,
-          dateLimit: "11-12-2022",
-          username: "Badis",
-        },
-        {
-          id: 2,
-          nameT: "task 1 ",
-          index: 2,
-          descriptionT: "description de la tache",
-          nameCol: "Stories",
-          idCol: 1,
-          dateLimit: "11-12-2022",
-          username: "Badis",
-        },
-      ],
-    },
-  ];
+  const { id } = useParams();
 
-  const [addNewCol] = useAddNewColMutation();
-  /*
+  React.useEffect(() => {
+    setCols(tasksList);
+    console.log(tasksList);
+  }, []);
+
   const onDragEnd = (result) => {
-    // TaskSlice : y'aura juste ses informatons ou je ne sais pas mais peute etre aussi ca ???
-    // Colslice : chaque col aura un nom , id , idKanban , et une liste de taches
-    // Kanbans Project : idKanban , idCreator , [id users ] , dateLimit..............
+    /* if (!JSON.parse(localStorage.getItem("user"))) return;
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+    if (isPrivate && (!userIds.includes(userId) || userId != creatorId)) return; */
 
     const { destination, source, draggableId } = result;
-    //console.log(destination);
-    console.log("destination", destination);
-    console.log("source", source);
-    console.log("draggableId", draggableId);
-
-    // const { data: tasks } = useGetTasksQuery(source.droppableId);
-
-    const sourceList = cols[source.droppableId - 1]; // c'est la colonne source ?
-    const destinationList = cols[destination.droppableId - 1]; // c'est la colonne destination ?
-
-    const draggingTask = source.index;
 
     if (!destination) {
       return;
     }
 
-    if (source.draggableId == destination.draggableId) {
-      // same col
-      //sourceList.splice(source.index, 1);
-      //destinationList.splice(destination.index, 0, draggingCard);
+    let sourceList = cols.filter((col) => col.id == source.droppableId)[0];
+    let destinationList = cols.filter(
+      (col) => col.id == destination.droppableId
+    )[0];
+
+    let draggingTask = sourceList.tasks.filter(
+      (task) => task.id == draggableId
+    )[0];
+
+    if (source.droppableId == destination.droppableId) {
+      sourceList.tasks.splice(source.index, 1);
+      destinationList.tasks.splice(destination.index, 0, draggingTask);
+    } else {
+      sourceList.tasks.splice(source.index, 1);
+      destinationList.tasks.splice(destination.index, 0, draggingTask);
+
+      // ajouter la requete qui modifie la colonne de la task
     }
-  };
-  */
-
-  const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
-    //console.log("destination", destination, "source", source, draggableId);
-    console.log(result);
-    if (!destination) {
-      return;
-    }
-
-    const sourceList = cols[source.droppableId];
-    const destinationList = cols[destination.droppableId];
-
-    const draggingCard = sourceList[source.index];
-
-    /* const draggingCard = sourceList.cards.filter(   c'est le souci 
-      (card) => card.id === draggableId
-    )[0];*/
-
-    // if (source.droppableId === destination.droppableId) {
-    //   sourceList.cards.splice(source.index, 1);
-    //   destinationList.cards.splice(destination.index, 0, draggingCard);
-    //   const newSate = {
-    //     ...data,
-    //     lists: {
-    //       ...data.lists,
-    //       [sourceList.id]: destinationList,
-    //     },
-    //   };
-    //   setData(newSate);
-    // } else {
-    //   sourceList.cards.splice(source.index, 1);
-    //   destinationList.cards.splice(destination.index, 0, draggingCard);
-    // faire le requete qui fait la modification du state de l'etat
-    //   const newState = {
-    //     ...data,
-    //     lists: {
-    //       ...data.lists,
-    //       [sourceList.id]: sourceList,
-    //       [destinationList.id]: destinationList,
-    //     },
-    //   };
-    //   setData(newState);
-    // }
   };
 
   return (
@@ -153,81 +75,15 @@ const KanbanTable = ({ taskLists, userIds }) => {
           },
         }}
       >
-        {isLoading ? (
+        {cols.length == 0 ? (
           <Loading />
         ) : (
           <>
-            {isError == true ? (
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "250px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography variant="h3"> Error , Empty Kanban</Typography>
-              </Box>
-            ) : (
-              <>
-                {cols.map((col) => (
-                  <Col key={col.id} {...col} />
-                ))}
-              </>
-            )}
+            {cols.map((col) => (
+              <Col key={col.id} idKanban={id} {...col} />
+            ))}
           </>
         )}
-
-        {/* CE QUE J'APPELLE UN COL ADD */}
-        {/* <Box
-          sx={{
-            maxWidth: "400px",
-            background: "rgba(0,0,0,0.2)",
-            borderRadius: "5px",
-            padding: "10px",
-            width: "250px",
-            minWidth: "250px",
-            height: "auto",
-            maxHeight: "95%",
-            margin: "10px",
-          }}
-        >
-          <TextField
-            type={"text"}
-            variant="outlined"
-            name="namecol"
-            value={nameCol}
-            onChange={(e) => {
-              setNameCol(e.target.value);
-            }}
-            label="new Column"
-            InputProps={{
-              endAdornment: (
-                <IconButton
-                  position="end"
-                  size="small"
-                  onClick={async () => {
-                    if (nameCol === "" || typeof nameCol === "undefined")
-                      return;
-                    try {
-                      const dataCol = await addNewCol({
-                        nameCol: nameCol,
-                        idKanban: id,
-                      });
-                      setNameCol("");
-                    } catch (error) {
-                      console.log(error);
-                    }
-                  }}
-                >
-                  <AddTaskIcon />
-                </IconButton>
-              ),
-            }}
-          />
-        </Box> */}
-        {/**LA FIN DE CE QUE J'APPELLE UN COL ADD */}
       </Box>
     </DragDropContext>
   );

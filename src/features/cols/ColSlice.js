@@ -8,8 +8,7 @@ import { useGetTasksQuery } from "../tasks/TaskSliceApi";
 
 const colSlice = createSlice({
     name: "col",
-    initialState: [], // un tableau vide de qui contient les colonnes donc on aura un truc du genre 
-    // [{id:4, nameCol:"red", tasks:[{task1}, {task2},{task3},..........]}]
+    initialState: [],
     reducers: {
 
         addNewCol: (state, action) => {

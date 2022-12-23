@@ -3,17 +3,48 @@ import { ApiSlice } from "../../app/api/apiSlice";
 
 export const ProfileApiSlice = ApiSlice.injectEndpoints({
     endpoints: builder => ({
-        getProfile: builder.query({
+
+        getUserKanbans: builder.query({
             query: id => ({
-                url: `/user/profile/${id}`,
+                url: `/kanban/getUserKanbans/${id}`,
                 method: 'GET',
+            }),
+            invalidatesTags: ['kanbans']
+        }),
+        getParticipedKanbans: builder.query({
+            query: id => ({
+                url: `/kanban/getParticipedKanbans/${id}`,
+                method: 'GET',
+            }),
+            invalidatesTags: ['kanbans']
+        }),
+
+
+
+
+
+        // invitation part
+        getInvitations: builder.query({
+            query: id => ({
+                url: `/kanban/getUserInvitations`,
+                method: 'POST',
+                body: { id }
             }),
             invalidatesTags: ['profile']
         }),
-        getInvitations: builder.query({
+        acceptInvitation: builder.mutation({
             query: id => ({
-                url: `/user/profile/invitations/${id}`,
-                method: 'GET',
+                url: `/kanban/acceptInvitation`,
+                method: 'POST',
+                body: { id }
+            }),
+            invalidatesTags: ['profile']
+        }),
+        refuseInvitation: builder.mutation({
+            query: id => ({
+                url: `/kanban/refuseInvitation`,
+                method: 'POST',
+                body: { id }
             }),
             invalidatesTags: ['profile']
         })
@@ -23,4 +54,4 @@ export const ProfileApiSlice = ApiSlice.injectEndpoints({
 });
 
 
-export const { useGetProfileQuery } = ProfileApiSlice;
+export const { useGetParticipedKanbansQuery, useGetUserKanbansQuery, useRefuseInvitationMutation, useGetInvitationsQuery, useAcceptInvitationMutation } = ProfileApiSlice;

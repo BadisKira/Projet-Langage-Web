@@ -17,11 +17,7 @@ import Button from "@mui/material/Button";
 
 const SortAccordion = ({ children, title }) => {
   return (
-    <Accordion
-      sx={{ background: "rgba(0,0,0,.1)", marginBottom: "4px" }}
-      // expanded={expanded === "panel1"}
-      // onChange={handleChange("panel1")}
-    >
+    <Accordion sx={{ background: "rgba(0,0,0,.1)", marginBottom: "4px" }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography sx={{}}>{title}</Typography>
       </AccordionSummary>

@@ -6,8 +6,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
-import { useCreateTaskMutation } from "../features/tasks/TaskSliceApi";
+import {
+  useAddTaskMutation,
+  useDeleteTaskMutation,
+  useModifyTaskMutation,
+} from "../features/tasks/TaskSliceApi";
 
 import React, { useState } from "react";
 import { Select, MenuItem } from "@mui/material";
@@ -18,10 +21,15 @@ const ModelTask = ({
   idCol,
   title,
   taskInfo = null,
+  users = [],
 }) => {
-  const [createTask] = useCreateTaskMutation();
+  const [addTask, isLoading, isError, isSuccess] = useAddTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [modifyTask] = useModifyTaskMutation();
+
   const [mode, setMode] = useState(taskInfo == null ? 0 : 1); // 0 create task 1 update task
   const [task, setTask] = React.useState({
+    id: "",
     nameT: "",
     descriptionT: "",
     username: "",
@@ -43,12 +51,23 @@ const ModelTask = ({
       idCol: idCol,
     });
   };
-  const handelAdd = async () => {
+  const handleClick = async () => {
+    console.log(task);
     try {
-      await createTask(task);
+      if (mode == 0) await addTask(task);
+      else if (mode == 1) await modifyTask(task);
       handelClose();
     } catch (error) {
       alert(error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteTask(task.id);
+      handelClose();
+    } catch (error) {
+      alert("error");
     }
   };
   return (
@@ -100,9 +119,11 @@ const ModelTask = ({
               value={task.username}
               name="username"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {users.map((user, index) => {
+                <MenuItem key={index} value={user.userId}>
+                  {user.username}
+                </MenuItem>;
+              })}
             </Select>
             <TextField
               onChange={handelChange}
@@ -113,8 +134,30 @@ const ModelTask = ({
             />
           </Stack>
         </Box>
-        <Button onClick={handelAdd}>Apply</Button>
-        <Button onClick={handelClose}>Close </Button>
+        <Button marginRight={2} onClick={handleClick}>
+          Apply
+        </Button>
+        <Button
+          sx={{
+            marginLeft: "5px",
+          }}
+          onClick={handelClose}
+        >
+          Close{" "}
+        </Button>
+        {mode == 1 && (
+          <Button
+            sx={{
+              background: "red",
+              color: "white",
+              marginLeft: "5px",
+              "&:hover": { background: "red" },
+            }}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        )}
       </DialogContent>
     </Dialog>
   );

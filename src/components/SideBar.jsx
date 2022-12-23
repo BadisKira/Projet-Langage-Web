@@ -12,9 +12,6 @@ const SideBar = ({ children, openSideBar = false, setOpenSideBar }) => {
     ) {
       return;
     }
-
-    // setState({ ...state, [anchor]: open });
-
     setOpenSideBar(!openSideBar);
   };
   return (

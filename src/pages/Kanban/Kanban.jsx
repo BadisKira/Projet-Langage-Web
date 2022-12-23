@@ -6,41 +6,39 @@ import Stack from "@mui/material/Stack";
 import KanbanHeader from "./KanbanHeader";
 import KanbanTable from "./KanbanTable";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetOneKanbanQuery } from "../../features/kanban/KanbanApiSlice";
+import {
+  useGetOneKanbanQuery,
+  useGetPublicKanbansQuery,
+} from "../../features/kanban/KanbanApiSlice";
 import Loading from "../../components/Loading";
+import { useState } from "react";
 
 // Verify if i'm allowed in this project
 
-const Kanban = ({
-  id,
-  creatorId,
-  dateLimit,
-  isPrivate,
-  name,
-  description,
-  userIds,
-}) => {
-  // const { id } = useParams();
-  // const {
-  //   data: kanban,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useGetOneKanbanQuery(Number(id));
+const Kanban = () => {
+  const { id } = useParams();
+  const {
+    data: kanbans,
+    isLoading,
+    isError,
+    isSuccess,
+    error,
+  } = useGetPublicKanbansQuery(Number(id));
   const navigate = useNavigate();
-  const isLoading = false;
-  const isError = false;
-  const kanban = [{}];
 
-  React.useEffect(() => {
-    if (isPrivate) {
-      const userId =
-        JSON.parse(localStorage.getItem("user")) &&
-        JSON.parse(localStorage.getItem("user")).id;
+  const kanban = kanbans ? kanbans.filter((kanban) => kanban.id == id)[0] : {};
 
-      if (!userIds.includes(userId) && !creatorId == userId) navigate("/");
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (isPrivate) {
+  //     const userId =
+  //       JSON.parse(localStorage.getItem("user")) &&
+  //       JSON.parse(localStorage.getItem("user")).id;
+
+  //     if (!userIds.includes(userId) && !creatorId == userId) navigate("/");
+  //   }
+  // }, []);
+  console.log(isSuccess);
+  console.log(kanban);
 
   return (
     <Stack
@@ -52,7 +50,7 @@ const Kanban = ({
         <Loading />
       ) : (
         <>
-          {isError ? (
+          {!isSuccess ? (
             <Box
               sx={{
                 width: "100%",
@@ -67,14 +65,20 @@ const Kanban = ({
           ) : (
             <>
               <KanbanHeader
-                id={id}
-                nameK={name}
-                idCreator={creatorId || "patrick"}
-                privacy={isPrivate || "eer"}
-                dateCreation={dateLimit}
+                id={kanban.id}
+                nameK={kanban.name}
+                idCreator={kanban.creatorId || "patrick"}
+                privacy={kanban.isPrivate || "eer"}
+                dateCreation={kanban.dateLimit}
+                description={kanban.description}
               />
 
-              {/* <KanbanTable taskLists={taskLists} userIds={userIds} /> */}
+              <KanbanTable
+                creatorId={kanban.creatorId}
+                isPrivate={kanban.isPrivate}
+                tasksList={kanban.taskLists}
+                userIds={kanban.userIds}
+              />
             </>
           )}
         </>

@@ -85,7 +85,17 @@ const Projects = () => {
             ) : (
               <>
                 {!isSuccess ? (
-                  <div>Erreur tu connais </div>
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "250px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography variant="h3"> No projects found .</Typography>
+                  </Box>
                 ) : (
                   <>
                     {kanbans.length == 0 ? (
@@ -98,7 +108,7 @@ const Projects = () => {
                           justifyContent: "center",
                         }}
                       >
-                        <Typography variant="h3"> No , projects</Typography>
+                        <Typography variant="h3"> No projects</Typography>
                       </Box>
                     ) : (
                       <>

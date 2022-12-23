@@ -11,14 +11,17 @@ export const KanbanApiSlice = ApiSlice.injectEndpoints({
         }),
         getOneUserKanbans: builder.query({
             query: (iduser) => ({
-                url: `/kanban/getUserKanbans/${iduser}`,
-                method: "GET"
+                url: `/kanban/getUserKanbans`,
+                method: "POST",
+                body: { iduser }
+
             }), providesTags: ["kanbans"]
         }),
         getOneKanban: builder.query({
             query: id => ({
-                url: `/kanbans?id=${id}`,
-                method: "GET",
+                url: `/Kanban?id=${id}`,
+                method: "POST",
+                body: { id }
             }),
             providesTags: ['kanbans']
         }),
@@ -35,13 +38,21 @@ export const KanbanApiSlice = ApiSlice.injectEndpoints({
                 method: "DELETE",
             }), invalidatesTags: ['kanbans']
         }),
+
+
+
+
+        //Invitaion part 
         invitePeople: builder.mutation({
             query: ({ username, idkanban }) => ({
-                url: "/invitations",
+                url: "/kanban/invite",
                 method: 'POST',
                 body: { username, idkanban }
             }), invalidatesTags: ['kanbans']
-        })
+        }),
+
+
+
     })
 });
 export const {

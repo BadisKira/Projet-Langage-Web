@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -27,8 +27,20 @@ import { useNavigate } from "react-router-dom";
 const ProfileInfos = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const clientData = useSelector(state => state.client);
-  const clientData = { nom: "Lamriou", prenom: "Celena", phone: "05123269", idClient: '15', "email": "Hammadache@badis.com" }
+
+
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('user'))) {
+      navigate("/");
+    }
+  }, [])
+
+  const clientData = JSON.parse(localStorage.getItem('user'));
+
+
+
+
+
 
   return (
     <Box
@@ -68,20 +80,21 @@ const ProfileInfos = () => {
                   fontSize: { xs: 26, sm: 32 },
                 }}
               >
-                {clientData.nom[0]}
-                {clientData.prenom[0]}
+                {clientData.firstName ? clientData.firstName[0] : "N"}
+                {clientData.lastName ? clientData.lastName[0] : "N"}
+
               </Avatar>
 
               <Box mx={2}>
                 <Typography variant="h5">
-                  {clientData.nom} {clientData.prenom}
+                  {clientData.lastName} {clientData.firstName}
                 </Typography>
                 <Typography
                   variant="h6"
                   component="h2"
                   color="secondary.contrastText"
                 >
-                  {clientData.idclient}
+                  {clientData.id}
                 </Typography>
               </Box>
             </Box>

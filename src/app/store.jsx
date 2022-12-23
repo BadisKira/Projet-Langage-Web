@@ -14,7 +14,6 @@ export const store = configureStore({
     cols: ColApiSlice.reducer,
     profile: profileReducer,
     kanban: KanbanApiSlice.reducer,
-    // j'ai aucune idée de ce que fais cette ligne
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(ApiSlice.middleware),

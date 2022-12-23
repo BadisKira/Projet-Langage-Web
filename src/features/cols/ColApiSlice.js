@@ -17,10 +17,11 @@ export const ColApiSlice = ApiSlice.injectEndpoints({
             }), invalidatesTags: ['cols']
         }),
         deleteCol: builder.mutation({
-            query: id => ({
-                url: `/cols?id=${id}`,
-                method: "DELETE"
-            }), invalidatesTags: ['cols']
+            query: col => ({
+                url: `/kanban/deleteTaskList`,
+                method: "DELETE",
+                body: { ...col }
+            }), invalidatesTags: ['cols , kanbans']
         })
 
     })

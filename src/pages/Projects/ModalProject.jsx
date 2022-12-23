@@ -53,8 +53,8 @@ const ModalProject = ({ open, setOpen }) => {
     creationDate: new Date(),
     dateLimit: "",
     taskLists: [
-      { tasks: null, title: "Stories" },
-      { tasks: null, title: "Terminées" },
+      { tasks: [], title: "Stories" },
+      { tasks: [], title: "Terminées" },
     ],
     userIds: [],
   });

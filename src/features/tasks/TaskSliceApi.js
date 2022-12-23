@@ -3,37 +3,40 @@ import { ApiSlice } from "../../app/api/apiSlice";
 
 export const TaskSliceApi = ApiSlice.injectEndpoints({
     endpoints: builder => ({
-        getTasks: builder.query({
-            query: (idCol) => ({
-                url: `/tasks?idCol=${idCol}`,
-                method: "GET"
-            }), providesTags: ['tasks']
-        }),
-        createTask: builder.mutation({
-            query: task => ({
-                url: "/tasks",
+        addTask: builder.mutation({
+            query: (task) => ({
+                url: "/kanban/addTask",
                 method: "POST",
                 body: { ...task }
-            }), invalidatesTags: ['tasks']
+
+            }), invalidatesTags: ['kanbans']
         }),
-        deleteTask: builder.mutation({}),
-        moveTask: builder.mutation({
-            query: ({ task, newIdcol }) => ({
-                url: `/moveTask/${task.id}`,
-                METHOD: 'PUT',
-                body: { ...task, idCol: newIdcol }
-            }), invalidatesTags: ['tasks', 'cols']
+
+        deleteTask: builder.mutation({
+            query: (id) => ({
+                url: `/kanban/deleteTask`,
+                method: "POST",
+                body: { id }
+
+            }), invalidatesTags: ['kanbans']
         }),
-        filterTask: builder.query({}),
-        getMyTasks: builder.query({})
+
+        modifyTask: builder.mutation({
+            query: (task) => ({
+                url: "/kanban/modifyTask",
+                method: "POST",
+                body: { ...task }
+
+            }), invalidatesTags: ['kanbans']
+        }),
+
+
     })
 });
 
 export const {
-    useGetTasksQuery,
-    useCreateTaskMutation,
+    useAddTaskMutation,
     useDeleteTaskMutation,
-    useMoveTaskMutation,
-    useFilterTaskQuery,
-    useGetMyTasksQuery
+    useModifyTaskMutation,
+    useMoveTaskMutation
 } = TaskSliceApi; 

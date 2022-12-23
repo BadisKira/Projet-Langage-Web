@@ -42,7 +42,7 @@ function ModifyForm() {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handelChangeClientInfo}
-            value={clientInfo.firstName}
+            value={clientInfo.firstName || ""}
             size="small"
             name="nom"
             required
@@ -55,7 +55,7 @@ function ModifyForm() {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handelChangeClientInfo}
-            value={clientInfo.lastName}
+            value={clientInfo.lastName || ""}
             size="small"
             required
             fullWidth

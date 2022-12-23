@@ -5,7 +5,14 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import KanbanSideBar from "./KanbanSideBar";
 
-const KanbanHeader = ({ nameK, idCreator, dateCreation, privacy, id }) => {
+const KanbanHeader = ({
+  nameK,
+  idCreator,
+  dateCreation,
+  privacy,
+  id,
+  description,
+}) => {
   const [openSideBar, setOpenSideBar] = React.useState(false);
   return (
     <Box
@@ -30,6 +37,7 @@ const KanbanHeader = ({ nameK, idCreator, dateCreation, privacy, id }) => {
         idCreator={idCreator}
         dateCreation={dateCreation}
         id={id}
+        description={description}
         privacy={privacy}
         openSideBar={openSideBar}
         setOpenSideBar={setOpenSideBar}

@@ -13,12 +13,23 @@ const KanbanSideBar = ({
   openSideBar = false,
   setOpenSideBar,
   nameK,
+  description,
   idCreator,
   dateCreation,
   id,
   privacy,
+  users = [
+    { id: 1, username: "badis" },
+    { id: 2, username: "karakaya" },
+  ],
 }) => {
   const amICreator = () => {
+    const userId = JSON.parse(localStorage.getItem("user"))
+      ? JSON.parse(localStorage.getItem("user")).id
+      : null;
+    console.log(userId);
+    if (userId == null) return false;
+    if (idCreator != userId) return false;
     return true;
   };
   return (
@@ -45,14 +56,11 @@ const KanbanSideBar = ({
         </Typography>
 
         <Typography variant="body2" comp="h2" marginTop={2}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab earum,
-          nostrum amet ratione magnam in alias non perferendis omnis velit.
-          Distinctio dolore harum officia, tempora vitae sequi laborum
-          repellendus amet!
+          {description}
         </Typography>
         {/* Invite a person  */}
 
-        {amICreator && (
+        {amICreator() && (
           <Box
             display={"flex"}
             flexDirection="column"
@@ -80,44 +88,15 @@ const KanbanSideBar = ({
           </Box>
         )}
 
-        {/* End invitation */}
+        <Box marginTop={2}>
+          <Typography variant="h6">Participants : </Typography>
 
-        {/**Trie  ?????? */}
-        <Box
-          display={"flex"}
-          flexDirection="column"
-          alignItems={"start"}
-          marginY={3}
-          paddingBottom={3}
-        >
-          <Typography variant="h6" comp="p">
-            Sort By
-          </Typography>
-          <FormControlLabel
-            value="start"
-            control={<Checkbox />}
-            label="Order A-z"
-            labelPlacement="start"
-          />
-          <FormControlLabel
-            value={"dd"}
-            control={<TextField type={"date"} sx={{ marginLeft: "5px" }} />}
-            label="date limit  "
-            labelPlacement="start"
-          />
-          <Button
-            size="small"
-            variant="contained"
-            sx={{
-              alignSelf: "end",
-              marginTop: "5px",
-              textTransform: "capitalize",
-            }}
-          >
-            sort
-          </Button>
+          {users.map((user, index) => (
+            <Typography sx={{ marginTop: 1 }} key={index} variant="subtitle1">
+              {user.username}
+            </Typography>
+          ))}
         </Box>
-        {/**END Tri  */}
       </Box>
     </SideBar>
   );

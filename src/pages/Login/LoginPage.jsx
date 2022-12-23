@@ -22,7 +22,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [isSignUp, setIsSignUp] = React.useState(false); //signup == inscrire && signin == authentifier
   const [form, setForm] = React.useState({
-    firstname: "",
+    first_name: "",
     lastname: "",
     username: "",
     password: "",
@@ -47,9 +47,7 @@ const LoginPage = () => {
       await signup(form).unwrap();
       alert("compte utilisateur créer");
       try {
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     } else {
       try {
         const userData = await login({
@@ -117,7 +115,7 @@ const LoginPage = () => {
                         size="medium"
                         type={"text"}
                         placeholder="First Name"
-                        name="firstname"
+                        name="first_name"
                       />
                       <TextField
                         onChange={handleChange}
@@ -174,10 +172,7 @@ const LoginPage = () => {
                     Send
                   </Button>
 
-                  <Typography variant="subtitle2" component={"p"}>
-                    {signupRes.isError && "erreur , verify your inputs "}
-                    {authRes.isError && "username or password incorrect"}
-                  </Typography>
+                  <Typography variant="subtitle2" component={"p"}></Typography>
 
                   <Box>
                     {isSignUp ? (

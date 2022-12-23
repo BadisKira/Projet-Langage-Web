@@ -10,10 +10,8 @@ const baseQuery = fetchBaseQuery({
     prepareHeaders: (headers, { getState }) => {
         const token = JSON.parse(localStorage.getItem("user")) ? JSON.parse(localStorage.getItem("user")).authToken : getState().auth.authToken
         if (token) {
-            console.log("je ssuis juste avanr de mettre le header");
             headers.set('Authorization', `Bearer ${token}`);
-
-            console.log(headers);
+            headers.set('Access-Control-Allow-Origin', '*');
         }
         return headers;
     }
@@ -22,14 +20,11 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions);
-    console.log(result);
     if (result?.error?.originalStatus === 403) {
         // ici le test n'est pas universel  , faut voir ton back
-        console.log('sending refresh token');
         // send refresh token to get ne access token
 
         const refreshResult = await baseQuery('refreshendpoint', api, extraOptions);
-        console.log(refreshResult);
 
         if (refreshResult?.data) {
             const user = api.getState().auth.user;

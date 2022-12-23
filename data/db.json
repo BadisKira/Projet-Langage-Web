@@ -51,30 +51,102 @@
     }
   ],
   "Cols": [
+   
+  ],
+  "kanban": [
     {
       "id": 1,
-      "nameCol": "To do",
-      "idKanban": 1
+      "name": "Kanban number 1 ",
+      "dateCreation": "27/11/2022",
+      "creatorId": 1,
+      "isPrivate": 1,
+      "description": "rr" ,
+      "userIds":[1,2,3,4,5],
+      "tasksList": [{
+        "id": 1,
+        "nameCol": "To do",
+        "idKanban": 1, 
+        "tasks":[ {
+          "nameT": "badis1",
+          "descriptionT": "fezf",
+          "username": 30,
+          "dateLimit": "2022-12-11",
+          "nameCol": "To do",
+          "idCol": 1,
+          "importance": "",
+          "id": 1
+        },
+        {
+          "nameT": "dze2",
+          "descriptionT": "dezd",
+          "username": 20,
+          "dateLimit": "2022-12-14",
+          "nameCol": "done",
+          "idCol": 1,
+          "importance": "",
+          "id": 2
+        }]
     },
     {
       "id": 2,
       "nameCol": "done",
-      "idKanban": 1
+      "idKanban": 1 ,
+          "tasks":[ {
+          "nameT": "badis3",
+          "descriptionT": "fezf",
+          "username": 30,
+          "dateLimit": "2022-12-11",
+          "nameCol": "To do",
+          "idCol": 1,
+          "importance": "",
+          "id": 3
+        },
+        {
+          "nameT": "dze4",
+          "descriptionT": "dezd",
+          "username": 20,
+          "dateLimit": "2022-12-14",
+          "nameCol": "done",
+          "idCol": 2,
+          "importance": "",
+          "id": 4
+        }]
     },
     {
       "nameCol": "fr",
       "idKanban": 1,
-      "id": 3
-    }
-  ],
-  "Kanbans": [
-    {
-      "id": 1,
-      "nameK": "Kanban number 1 ",
-      "dateCreation": "27/11/2022",
-      "idCreator": 1,
-      "privacy": 1,
-      "description": "rr"
+      "id": 3 , 
+            "tasks":[ {
+            "nameT": "badis5",
+            "descriptionT": "fezf",
+            "username": 30,
+            "dateLimit": "2022-12-11",
+            "nameCol": "To do",
+            "idCol": 3,
+            "importance": "",
+            "id": 5
+          },
+          {
+            "nameT": "dze6",
+            "descriptionT": "dezd",
+            "username": 20,
+            "dateLimit": "2022-12-14",
+            "nameCol": "done",
+            "idCol": 3,
+            "importance": "",
+            "id": 6
+          },
+         {
+            "nameT": "feerferfercerv",
+            "descriptionT": "dezd",
+            "username": 20,
+            "dateLimit": "2022-12-14",
+            "nameCol": "done",
+            "idCol": 3,
+            "importance": "",
+            "id": 7
+          }]
+    }]
     },
     {
       "id": 2,

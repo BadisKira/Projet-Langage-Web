@@ -22,13 +22,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-function createData(hotel, adresse, ville) {
-  return {
-    hotel,
-    adresse,
-    ville,
-  };
-}
 
 
 const customTableCell = {
@@ -45,7 +38,6 @@ const DialogConfirm = ({ dialogAction, setDialogAction }) => {
   const handleClick = () => {
     if (dialogAction.actionType === "ACCEPT") {
       // lancer une requete qui vas accepter l'invitaion
-      console.log();
     }
     else if (dialogAction.actionType === "REJECT") {
       // lancer une requete qui vas supp l'invitaion
@@ -208,7 +200,7 @@ export default function EnhancedTable() {
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
-          // numSelected={selected.length}
+          numSelected={0}
           rows={rows} />
         <TableContainer >
           <Table size="medium" >
